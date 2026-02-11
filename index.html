@@ -135,10 +135,7 @@
 
         .title .letter {
             display: inline-block;
-            background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #000000;
             transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1.4),
                 filter 0.35s ease;
             cursor: pointer;
@@ -146,33 +143,6 @@
             -webkit-user-select: none;
         }
 
-        .title .letter:hover {
-            transform: translateY(-8px) scale(1.15);
-            filter: drop-shadow(0 0 20px var(--accent));
-        }
-
-        .title .letter.pop {
-            animation: letterPop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.4);
-        }
-
-        @keyframes letterPop {
-            0% {
-                transform: scale(1);
-            }
-
-            30% {
-                transform: scale(0.75) rotate(-8deg);
-            }
-
-            60% {
-                transform: scale(1.3) rotate(4deg);
-                filter: drop-shadow(0 0 30px var(--accent));
-            }
-
-            100% {
-                transform: scale(1) rotate(0deg);
-            }
-        }
 
         /* --- Countdown --- */
         .countdown-container {
@@ -194,7 +164,44 @@
             flex-direction: column;
             align-items: center;
             color: black;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.18) 0%,
+                rgba(255, 255, 255, 0.06) 40%,
+                rgba(255, 255, 255, 0.02) 60%,
+                rgba(255, 255, 255, 0.10) 100%
+            );
+            backdrop-filter: blur(24px) saturate(1.2);
+            -webkit-backdrop-filter: blur(24px) saturate(1.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top-color: rgba(255, 255, 255, 0.45);
+            border-left-color: rgba(255, 255, 255, 0.35);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.4),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.08),
+                0 4px 24px rgba(0, 0, 0, 0.15),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
+        .countdown-unit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 45%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(255, 255, 255, 0.05) 60%,
+                transparent 100%
+            );
+            border-radius: 16px 16px 50% 50%;
+            pointer-events: none;
         }
 
         .digit-group {
@@ -203,11 +210,10 @@
         }
 
         .digit-slot {
-            width: calc(0.65em + 32px);
-            height: calc(1.15em + 32px);
-            padding: 16px;
-            margin: -16px -16px;
-            overflow: hidden;
+            width: 0.65em;
+            height: 1.15em;
+            overflow: visible;
+            clip-path: inset(-2px -20px);
             position: relative;
             font-size: clamp(3.2rem, 9vw, 6rem);
             font-weight: 900;
@@ -237,12 +243,12 @@
         }
 
         .unit-label {
-            font-size: clamp(0.5rem, 1.2vw, 0.7rem);
-            font-weight: 600;
+            font-size: clamp(0.65rem, 1.5vw, 0.9rem);
+            font-weight: 900;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            opacity: 0.5;
-            color: rgba(255, 255, 255, 0.7);
+            opacity: 1;
+            color: #ffffff;
             margin-top: 2px;
         }
 
@@ -699,16 +705,6 @@
         //  INIT
         // =====================================================
 
-        // Letter click interaction
-        document.querySelectorAll('.title .letter').forEach(el => {
-            el.addEventListener('click', () => {
-                el.classList.remove('pop');
-                void el.offsetWidth;
-                el.classList.add('pop');
-            });
-            el.addEventListener('animationend', () => el.classList.remove('pop'));
-        });
-
         // Apply theme
         applyTheme();
 
@@ -722,9 +718,11 @@
 
         function updateRainbowGlow(time) {
             const slots = document.querySelectorAll('.digit-slot');
+            const letters = document.querySelectorAll('.title .letter');
             const speed = 0.00025;
             const positions = 8;
 
+            // Rainbow glow for digit slots
             slots.forEach((slot, slotIndex) => {
                 const phaseOffset = slotIndex * 0.6;
                 const shadows = [];
@@ -743,6 +741,23 @@
                 }
 
                 slot.style.textShadow = shadows.join(', ');
+            });
+
+            // White glow for title letters
+            letters.forEach((letter, index) => {
+                const shadows = [];
+
+                for (let i = 0; i < positions; i++) {
+                    const angle = (i / positions) * Math.PI * 2;
+                    const x = Math.cos(angle);
+                    const y = Math.sin(angle);
+
+                    shadows.push(`${(x * 1).toFixed(1)}px ${(y * 1).toFixed(1)}px 2px hsla(0, 0%, 100%, 0.6)`);
+                    shadows.push(`${(x * 2.5).toFixed(1)}px ${(y * 2.5).toFixed(1)}px 6px hsla(0, 0%, 100%, 0.3)`);
+                    shadows.push(`${(x * 4).toFixed(1)}px ${(y * 4).toFixed(1)}px 12px hsla(0, 0%, 100%, 0.15)`);
+                }
+
+                letter.style.textShadow = shadows.join(', ');
             });
         }
 
