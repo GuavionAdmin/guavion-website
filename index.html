@@ -574,6 +574,20 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
+        // Mouse tracking
+        const mouse = { x: -9999, y: -9999, active: false };
+        const MOUSE_RADIUS = 120;
+        const MOUSE_FORCE = 0.8;
+
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            mouse.active = true;
+        });
+        document.addEventListener('mouseleave', () => {
+            mouse.active = false;
+        });
+
         // Floating particles — slow, gentle drifting effect
         const particles = [];
         const PARTICLE_COUNT = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 10000));
@@ -593,9 +607,28 @@
 
         function updateParticles() {
             for (const p of particles) {
+                // Mouse repulsion
+                if (mouse.active) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MOUSE_RADIUS && dist > 0) {
+                        const force = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE;
+                        p.vx += (dx / dist) * force;
+                        p.vy += (dy / dist) * force;
+                    }
+                }
+
+                // Dampen velocity so particles settle back
+                p.vx *= 0.96;
+                p.vy *= 0.96;
+
+                // Restore gentle drift
+                p.vx += (Math.random() - 0.5) * 0.005;
+                p.vy -= 0.0005;
+
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy -= 0.0005; // gentle gravity upward (float up slowly)
 
                 // Wrap around edges with fade
                 const margin = 50;
@@ -614,9 +647,31 @@
                 const twinkle = Math.sin(time * 0.0003 + p.phase) * 0.3 + 0.7;
                 const alpha = twinkle * 0.4;
 
+                // Glow brighter when near cursor
+                let drawAlpha = alpha;
+                let drawRadius = p.r;
+                if (mouse.active) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MOUSE_RADIUS * 1.5) {
+                        const proximity = 1 - dist / (MOUSE_RADIUS * 1.5);
+                        drawAlpha = Math.min(1, alpha + proximity * 0.6);
+                        drawRadius = p.r + proximity * 1.5;
+
+                        // Draw a faint line from particle to cursor
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = `rgba(200, 210, 240, ${proximity * 0.12})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 210, 240, ${alpha})`;
+                ctx.arc(p.x, p.y, drawRadius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 210, 240, ${drawAlpha})`;
                 ctx.fill();
             }
         }
