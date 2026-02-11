@@ -12,6 +12,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -101,7 +105,7 @@
             flex-direction: column;
             align-items: center;
             gap: 36px;
-            padding-top: 60px;
+            padding-top: 10px;
             padding-bottom: 40px;
             animation: fadeUp 1.2s ease-out both;
         }
@@ -166,20 +170,18 @@
             color: black;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0.18) 0%,
-                rgba(255, 255, 255, 0.06) 40%,
-                rgba(255, 255, 255, 0.02) 60%,
-                rgba(255, 255, 255, 0.10) 100%
-            );
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.18) 0%,
+                    rgba(255, 255, 255, 0.06) 40%,
+                    rgba(255, 255, 255, 0.02) 60%,
+                    rgba(255, 255, 255, 0.10) 100%);
             backdrop-filter: blur(24px) saturate(1.2);
             -webkit-backdrop-filter: blur(24px) saturate(1.2);
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-top-color: rgba(255, 255, 255, 0.45);
             border-left-color: rgba(255, 255, 255, 0.35);
             border-radius: 16px;
-            padding: 16px 20px;
+            padding: 5px 20px 16px 20px;
             box-shadow:
                 inset 0 1px 1px rgba(255, 255, 255, 0.4),
                 inset 0 -1px 1px rgba(0, 0, 0, 0.08),
@@ -194,12 +196,10 @@
             left: 0;
             right: 0;
             height: 45%;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0.05) 60%,
-                transparent 100%
-            );
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.25) 0%,
+                    rgba(255, 255, 255, 0.05) 60%,
+                    transparent 100%);
             border-radius: 16px 16px 50% 50%;
             pointer-events: none;
         }
@@ -238,7 +238,7 @@
         .countdown-sep {
             font-size: clamp(2.4rem, 7vw, 4.5rem);
             font-weight: 200;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.759);
             padding: 0 clamp(2px, 0.8vw, 8px);
         }
 
@@ -256,7 +256,7 @@
         .subtitle {
             font-size: clamp(0.8rem, 2vw, 1.05rem);
             font-weight: 300;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.02em;
             color: rgba(255, 255, 255, 0.5);
             animation: fadeUp 1.2s ease-out both;
             animation-delay: 0.45s;
@@ -267,14 +267,46 @@
             font-weight: 600;
         }
 
+        /* --- Contact Card Wrapper --- */
+        .contact-card {
+            position: relative;
+            width: min(700px, 90vw);
+            padding: 2px;
+            border-radius: 20px;
+            background: conic-gradient(from var(--card-angle, 0deg),
+                    #3cdc78, #06b6d4, #8b5cf6, #ec4899, #f59e0b, #3cdc78);
+            animation: fadeUp 1.2s ease-out both, cardSpin 4s linear infinite;
+            animation-delay: 0.55s, 0s;
+            box-shadow:
+                0 0 40px rgba(60, 220, 120, 0.2),
+                0 0 80px rgba(60, 220, 120, 0.08);
+        }
+
+        @property --card-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes cardSpin {
+            to {
+                --card-angle: 360deg;
+            }
+        }
+
+        .contact-card-inner {
+            background: rgba(8, 8, 20, 0.92);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 18px;
+            padding: 32px 28px 28px;
+        }
+
         /* --- Contact Form --- */
         .contact-form {
-            width: min(480px, 88vw);
             display: flex;
             flex-direction: column;
             gap: 15px;
-            animation: fadeUp 1.2s ease-out both;
-            animation-delay: 0.55s;
         }
 
         .contact-form .form-row {
@@ -290,13 +322,11 @@
         .contact-form .field input,
         .contact-form .field textarea {
             width: 100%;
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--panel-border);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             padding: 30px 15px 12px;
-            color: var(--text-color);
+            color: rgba(255, 255, 255, 0.9);
             font-family: inherit;
             font-size: 0.88rem;
             outline: none;
@@ -305,17 +335,27 @@
         }
 
         .form-header {
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--panel-border);
-            border-radius: 12px;
-            padding: 16px 20px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.25em;
+            text-align: center;
+            padding: 0 0 8px;
+        }
+
+        .form-header-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: var(--accent);
+            background: linear-gradient(135deg, #3cdc78, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-header-sub {
+            font-size: 0.78rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 4px;
         }
 
         .contact-form .field.full textarea {
@@ -326,32 +366,31 @@
             position: absolute;
             top: 11px;
             left: 16px;
-            font-size: 0.55rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--accent);
-            opacity: 0.5;
+            opacity: 1;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
 
         .contact-form .field input:focus~label,
         .contact-form .field textarea:focus~label {
-            opacity: 0.9;
+            opacity: 1;
         }
 
         .contact-form .field input::placeholder,
         .contact-form .field textarea::placeholder {
-            color: var(--muted-color);
+            color: rgba(255, 255, 255, 0.45);
         }
 
         .contact-form .field input:focus,
         .contact-form .field textarea:focus {
-            background: var(--panel-bg);
+            background: rgba(255, 255, 255, 0.10);
             border-color: var(--accent);
-            z-index: 1;
-            position: relative;
+            box-shadow: 0 0 20px rgba(60, 220, 120, 0.1);
         }
 
         .form-status {
@@ -375,15 +414,13 @@
 
         .form-submit {
             width: 100%;
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--panel-border);
-            color: var(--text-color);
+            background: rgba(60, 220, 120, 0.1);
+            border: 1px solid rgba(60, 220, 120, 0.4);
+            color: #3cdc78;
             font-family: inherit;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             padding: 16px;
             border-radius: 12px;
@@ -392,14 +429,14 @@
         }
 
         .form-submit:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: var(--accent);
-            color: var(--accent);
-            box-shadow: 0 0 30px var(--glow);
+            background: rgba(60, 220, 120, 0.18);
+            border-color: rgba(60, 220, 120, 0.7);
+            box-shadow: 0 0 30px rgba(60, 220, 120, 0.15);
+            transform: translateY(-1px);
         }
 
         .form-submit:active {
-            transform: scale(0.98);
+            transform: translateY(0) scale(0.98);
         }
 
         .form-submit:disabled {
@@ -420,6 +457,10 @@
         @media (max-width: 540px) {
             .contact-form .form-row {
                 flex-direction: column;
+            }
+
+            .contact-card-inner {
+                padding: 24px 18px 22px;
             }
         }
     </style>
@@ -462,29 +503,37 @@
             </div>
         </div>
 
-        <p class="subtitle">Something big is coming<span>.</span></p>
+        <p class="subtitle">Something big is coming<span></span></p>
 
-        <form class="contact-form" id="contactForm">
-            <input type="hidden" name="access_key" value="17f5c547-8298-412d-ad01-1b3cacc3715c">
-            <div class="hp"><input type="text" name="botcheck" tabindex="-1" autocomplete="off"></div>
-            <div class="form-header">Reach Out</div>
-            <div class="form-row">
-                <div class="field">
-                    <input type="text" id="cf-name" name="name" placeholder="Jane Doe" required>
-                    <label for="cf-name">Name</label>
-                </div>
-                <div class="field">
-                    <input type="email" id="cf-email" name="email" placeholder="you@email.com" required>
-                    <label for="cf-email">Email</label>
-                </div>
+        <div class="contact-card">
+            <div class="contact-card-inner">
+                <form class="contact-form" id="contactForm">
+                    <input type="hidden" name="access_key" value="17f5c547-8298-412d-ad01-1b3cacc3715c">
+                    <div class="hp"><input type="text" name="botcheck" tabindex="-1" autocomplete="off"></div>
+                    <div class="form-header">
+                        <div class="form-header-title">Reach Out</div>
+                        <div class="form-header-sub">Got questions? Ideas? Let's talk.</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field">
+                            <input type="text" id="cf-name" name="name" placeholder="Jane Doe" required>
+                            <label for="cf-name">Name</label>
+                        </div>
+                        <div class="field">
+                            <input type="email" id="cf-email" name="email" placeholder="you@email.com" required>
+                            <label for="cf-email">Email</label>
+                        </div>
+                    </div>
+                    <div class="field full">
+                        <textarea id="cf-msg" name="message" rows="3" placeholder="What's on your mind?"
+                            required></textarea>
+                        <label for="cf-msg">Message</label>
+                    </div>
+                    <div class="form-status" id="formStatus"></div>
+                    <button type="submit" class="form-submit" id="formSubmit">Send</button>
+                </form>
             </div>
-            <div class="field full">
-                <textarea id="cf-msg" name="message" rows="3" placeholder="What's on your mind?" required></textarea>
-                <label for="cf-msg">Message</label>
-            </div>
-            <div class="form-status" id="formStatus"></div>
-            <button type="submit" class="form-submit" id="formSubmit">Send</button>
-        </form>
+        </div>
     </div>
 
     <script>
