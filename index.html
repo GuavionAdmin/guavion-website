@@ -96,12 +96,13 @@
         /* --- Content --- */
         .content {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 36px;
             padding-top: 60px;
+            padding-bottom: 40px;
             animation: fadeUp 1.2s ease-out both;
         }
 
@@ -129,6 +130,7 @@
             display: flex;
             cursor: default;
             font-family: "Cherry Bomb One", system-ui;
+            margin-bottom: -12px;
         }
 
         .title .letter {
@@ -184,27 +186,33 @@
         .countdown-row {
             display: flex;
             align-items: baseline;
+            color: black;
         }
 
         .countdown-unit {
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: black;
+
         }
 
         .digit-group {
             display: flex;
+            gap: 1px;
         }
 
         .digit-slot {
-            width: 0.65em;
-            height: 1.15em;
+            width: calc(0.65em + 32px);
+            height: calc(1.15em + 32px);
+            padding: 16px;
+            margin: -16px -16px;
             overflow: hidden;
             position: relative;
             font-size: clamp(3.2rem, 9vw, 6rem);
             font-weight: 900;
             font-variant-numeric: tabular-nums;
-            color: #fff;
+            color: #000000;
             text-align: center;
             line-height: 1.15em;
         }
@@ -408,7 +416,6 @@
                 flex-direction: column;
             }
         }
-
     </style>
 </head>
 
@@ -500,7 +507,7 @@
         }
 
         // =====================================================
-        //  BOIDS FLOCKING SIMULATION
+        //  FLOATING PARTICLES EFFECT
         // =====================================================
 
         const canvas = document.getElementById('particles');
@@ -513,352 +520,54 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Mouse tracking
-        const mouse = { x: -9999, y: -9999, active: false };
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
-        });
-        window.addEventListener('mouseleave', () => { mouse.active = false; });
-        window.addEventListener('touchmove', e => {
-            mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; mouse.active = true;
-        }, { passive: true });
-        window.addEventListener('touchend', () => { mouse.active = false; });
+        // Floating particles — slow, gentle drifting effect
+        const particles = [];
+        const PARTICLE_COUNT = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 10000));
 
-        // Boid parameters
-        const BOID_COUNT = 150;
-        const MAX_SPEED = 1;
-        const MIN_SPEED = 0.45;
-        const MAX_FORCE = 0.045;     // gentle steering = smooth arcs
-        const PERCEPTION = 90;       // wider neighborhood = larger flocks
-        const SEP_RADIUS = 24;       // separation distance
-        const MOUSE_RADIUS = 170;    // mouse repulsion range
-        const MOUSE_FORCE = 0.35;    // mouse repulsion strength
-        const EDGE_MARGIN = 80;
-        const EDGE_FORCE = 0.15;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.08,
+                vy: (Math.random() - 0.5) * 0.06 - 0.02, // slight upward bias
+                r: Math.random() * 1.2 + 0.4,
+                life: Math.random() * 0.6 + 0.4,
+                maxLife: 1.0,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
 
-        // Weights for the three rules
-        const W_SEP = 1.5;
-        const W_ALI = 1.2;
-        const W_COH = 0.8;
+        function updateParticles() {
+            for (const p of particles) {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy -= 0.0005; // gentle gravity upward (float up slowly)
 
-        const TRAIL_LENGTH = 50;
-
-        class Boid {
-            constructor(x, y, swarm) {
-                this.x = x;
-                this.y = y;
-                this.swarm = swarm;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * (MAX_SPEED - MIN_SPEED) + MIN_SPEED;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
-                this.ax = 0;
-                this.ay = 0;
-                this.trail = [];
-            }
-
-            applyForce(fx, fy) {
-                this.ax += fx;
-                this.ay += fy;
-            }
-
-            // Steer towards a target velocity
-            steer(tx, ty) {
-                // desired minus current
-                let sx = tx - this.vx;
-                let sy = ty - this.vy;
-                const mag = Math.hypot(sx, sy);
-                if (mag > MAX_FORCE) { sx = sx / mag * MAX_FORCE; sy = sy / mag * MAX_FORCE; }
-                return [sx, sy];
-            }
-
-            flock(boids) {
-                let sepX = 0, sepY = 0, sepN = 0;
-                let aliX = 0, aliY = 0, aliN = 0;
-                let cohX = 0, cohY = 0, cohN = 0;
-
-                for (const other of boids) {
-                    if (other === this) continue;
-                    const dx = other.x - this.x;
-                    const dy = other.y - this.y;
-                    const dist = Math.hypot(dx, dy);
-
-                    if (dist < SEP_RADIUS && dist > 0) {
-                        sepX -= dx / dist / dist;
-                        sepY -= dy / dist / dist;
-                        sepN++;
-                    }
-
-                    if (other.swarm === this.swarm && dist < PERCEPTION) {
-                        aliX += other.vx;
-                        aliY += other.vy;
-                        aliN++;
-                        cohX += other.x;
-                        cohY += other.y;
-                        cohN++;
-                    }
+                // Wrap around edges with fade
+                const margin = 50;
+                if (p.x < -margin) p.x = canvas.width + margin;
+                if (p.x > canvas.width + margin) p.x = -margin;
+                if (p.y < -margin) {
+                    p.y = canvas.height + margin;
+                    p.life = Math.random() * 0.6 + 0.4;
                 }
-
-                if (sepN > 0) {
-                    const mag = Math.hypot(sepX, sepY);
-                    if (mag > 0) { sepX = sepX / mag * MAX_SPEED; sepY = sepY / mag * MAX_SPEED; }
-                    const [sx, sy] = this.steer(sepX, sepY);
-                    this.applyForce(sx * W_SEP, sy * W_SEP);
-                }
-
-                if (aliN > 0) {
-                    aliX /= aliN; aliY /= aliN;
-                    const mag = Math.hypot(aliX, aliY);
-                    if (mag > 0) { aliX = aliX / mag * MAX_SPEED; aliY = aliY / mag * MAX_SPEED; }
-                    const [sx, sy] = this.steer(aliX, aliY);
-                    this.applyForce(sx * W_ALI, sy * W_ALI);
-                }
-
-                // If pack is overcrowded, weaken cohesion and push away from center
-                const packSize = swarmN[this.swarm] || 1;
-                const overcrowded = packSize > SWARM_CAP;
-                const cohScale = overcrowded ? 0.2 : 1;
-
-                if (cohN > 0) {
-                    cohX = cohX / cohN - this.x;
-                    cohY = cohY / cohN - this.y;
-                    const mag = Math.hypot(cohX, cohY);
-                    if (mag > 0) { cohX = cohX / mag * MAX_SPEED; cohY = cohY / mag * MAX_SPEED; }
-                    const [sx, sy] = this.steer(cohX, cohY);
-                    this.applyForce(sx * W_COH * cohScale, sy * W_COH * cohScale);
-                }
-
-                // Overcrowded boids flee their pack center
-                if (overcrowded) {
-                    const cx = swarmCx[this.swarm];
-                    const cy = swarmCy[this.swarm];
-                    const dx = this.x - cx;
-                    const dy = this.y - cy;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist > 0) {
-                        const flee = 0.08;
-                        this.applyForce(dx / dist * flee, dy / dist * flee);
-                    }
-                }
-            }
-
-            avoidMouse() {
-                if (!mouse.active) return;
-                const dx = this.x - mouse.x;
-                const dy = this.y - mouse.y;
-                const dist = Math.hypot(dx, dy);
-                if (dist < MOUSE_RADIUS && dist > 0) {
-                    const strength = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE;
-                    this.applyForce(dx / dist * strength, dy / dist * strength);
-                }
-            }
-
-            avoidEdges() {
-                const w = canvas.width, h = canvas.height;
-                if (this.x < EDGE_MARGIN) this.applyForce(EDGE_FORCE * (1 - this.x / EDGE_MARGIN), 0);
-                if (this.x > w - EDGE_MARGIN) this.applyForce(-EDGE_FORCE * (1 - (w - this.x) / EDGE_MARGIN), 0);
-                if (this.y < EDGE_MARGIN) this.applyForce(0, EDGE_FORCE * (1 - this.y / EDGE_MARGIN));
-                if (this.y > h - EDGE_MARGIN) this.applyForce(0, -EDGE_FORCE * (1 - (h - this.y) / EDGE_MARGIN));
-            }
-
-            update() {
-                this.vx += this.ax;
-                this.vy += this.ay;
-                // Clamp speed to range [MIN_SPEED, MAX_SPEED]
-                const speed = Math.hypot(this.vx, this.vy);
-                if (speed > MAX_SPEED) {
-                    this.vx = this.vx / speed * MAX_SPEED;
-                    this.vy = this.vy / speed * MAX_SPEED;
-                } else if (speed < MIN_SPEED && speed > 0) {
-                    this.vx = this.vx / speed * MIN_SPEED;
-                    this.vy = this.vy / speed * MIN_SPEED;
-                }
-                this.x += this.vx;
-                this.y += this.vy;
-                this.ax = 0;
-                this.ay = 0;
-
-                // Record trail
-                this.trail.push(this.x, this.y);
-                if (this.trail.length > TRAIL_LENGTH * 2) {
-                    this.trail.splice(0, 2);
-                }
-
-                // Wrap as fallback
-                const w = canvas.width, h = canvas.height;
-                if (this.x < -20) this.x = w + 20;
-                if (this.x > w + 20) this.x = -20;
-                if (this.y < -20) this.y = h + 20;
-                if (this.y > h + 20) this.y = -20;
+                if (p.y > canvas.height + margin) p.y = -margin;
             }
         }
 
-        // Initialize boids in separate swarms
-        const boids = [];
-        const SWARM_COUNT = 4;
-        const SWARM_CAP = Math.ceil(BOID_COUNT / SWARM_COUNT * 1.35);
+        function drawParticles(time) {
+            for (const p of particles) {
+                const twinkle = Math.sin(time * 0.0003 + p.phase) * 0.3 + 0.7;
+                const alpha = twinkle * 0.4;
 
-        for (let s = 0; s < SWARM_COUNT; s++) {
-            const cx = (s % 2 + 0.5) / 2 * canvas.width + (Math.random() - 0.5) * 100;
-            const cy = (Math.floor(s / 2) + 0.5) / 2 * canvas.height + (Math.random() - 0.5) * 100;
-            const n = Math.floor(BOID_COUNT / SWARM_COUNT);
-            for (let i = 0; i < n; i++) {
-                boids.push(new Boid(
-                    cx + (Math.random() - 0.5) * 100,
-                    cy + (Math.random() - 0.5) * 100,
-                    s
-                ));
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 210, 240, ${alpha})`;
+                ctx.fill();
             }
         }
 
-        // Dynamic pack rebalancing — runs each frame
-        const swarmCx = new Float64Array(SWARM_COUNT);
-        const swarmCy = new Float64Array(SWARM_COUNT);
-        const swarmN = new Uint16Array(SWARM_COUNT);
-        const EVEN_COUNT = Math.floor(BOID_COUNT / SWARM_COUNT);
-        const swarmOverTime = new Float64Array(SWARM_COUNT); // seconds each pack has been oversized
-        let lastRebalanceTime = performance.now();
-
-        function rebalanceSwarms() {
-            const now = performance.now();
-            const dt = (now - lastRebalanceTime) / 1000; // seconds since last call
-            lastRebalanceTime = now;
-
-            // Compute centroids and counts
-            swarmCx.fill(0); swarmCy.fill(0); swarmN.fill(0);
-            for (const b of boids) {
-                swarmCx[b.swarm] += b.x;
-                swarmCy[b.swarm] += b.y;
-                swarmN[b.swarm]++;
-            }
-            for (let i = 0; i < SWARM_COUNT; i++) {
-                if (swarmN[i] > 0) {
-                    swarmCx[i] /= swarmN[i];
-                    swarmCy[i] /= swarmN[i];
-                }
-            }
-
-            // Track how long each pack has been above even distribution
-            for (let i = 0; i < SWARM_COUNT; i++) {
-                if (swarmN[i] > EVEN_COUNT) {
-                    swarmOverTime[i] += dt;
-                } else {
-                    swarmOverTime[i] = 0;
-                }
-            }
-
-            // Find the smallest pack
-            let smallest = 0;
-            for (let i = 1; i < SWARM_COUNT; i++) {
-                if (swarmN[i] < swarmN[smallest]) smallest = i;
-            }
-
-            // Force-eject boids from packs that have been oversized for 3+ seconds
-            for (let s = 0; s < SWARM_COUNT; s++) {
-                if (swarmOverTime[s] < 3) continue;
-                if (swarmN[s] <= EVEN_COUNT) continue;
-
-                // Eject a batch of boids to bring closer to even
-                const excess = swarmN[s] - EVEN_COUNT;
-                const toEject = Math.max(1, Math.ceil(excess * 0.4));
-                const members = boids.filter(b => b.swarm === s);
-                // Sort by distance from center — eject outermost first
-                members.sort((a, b2) => {
-                    const da = Math.hypot(a.x - swarmCx[s], a.y - swarmCy[s]);
-                    const db = Math.hypot(b2.x - swarmCx[s], b2.y - swarmCy[s]);
-                    return db - da;
-                });
-
-                let ejected = 0;
-                for (let j = 0; j < members.length && ejected < toEject; j++) {
-                    const b = members[j];
-                    // Find best target pack
-                    let target = -1, targetDist = Infinity;
-                    for (let i = 0; i < SWARM_COUNT; i++) {
-                        if (i === s || swarmN[i] >= SWARM_CAP) continue;
-                        const d = Math.hypot(b.x - swarmCx[i], b.y - swarmCy[i]);
-                        if (d < targetDist) { targetDist = d; target = i; }
-                    }
-                    if (target < 0 && smallest !== s && swarmN[smallest] < SWARM_CAP) {
-                        target = smallest;
-                    }
-                    if (target >= 0) {
-                        swarmN[b.swarm]--;
-                        b.swarm = target;
-                        swarmN[target]++;
-                        ejected++;
-                        if (swarmN[target] > swarmN[smallest]) {
-                            smallest = 0;
-                            for (let i = 1; i < SWARM_COUNT; i++) {
-                                if (swarmN[i] < swarmN[smallest]) smallest = i;
-                            }
-                        }
-                    }
-                }
-                // Reset the timer so we don't eject every single frame
-                swarmOverTime[s] = 0;
-            }
-
-            // Boids in oversized packs leave on their own (cap-based)
-            for (const b of boids) {
-                if (swarmN[b.swarm] <= SWARM_CAP) continue;
-
-                const myDist = Math.hypot(b.x - swarmCx[b.swarm], b.y - swarmCy[b.swarm]);
-                // Outliers leave first — the farther from center, the more likely
-                if (Math.random() > myDist / 300) continue;
-
-                // Try to join a nearby smaller pack, or the smallest one
-                let target = -1, targetDist = Infinity;
-                for (let i = 0; i < SWARM_COUNT; i++) {
-                    if (i === b.swarm || swarmN[i] >= SWARM_CAP) continue;
-                    const d = Math.hypot(b.x - swarmCx[i], b.y - swarmCy[i]);
-                    if (d < targetDist) { targetDist = d; target = i; }
-                }
-
-                // If no nearby pack, join the smallest
-                if (target < 0 && smallest !== b.swarm && swarmN[smallest] < SWARM_CAP) {
-                    target = smallest;
-                }
-
-                if (target >= 0) {
-                    swarmN[b.swarm]--;
-                    b.swarm = target;
-                    swarmN[target]++;
-                    // Update smallest tracker
-                    if (swarmN[target] > swarmN[smallest]) {
-                        smallest = 0;
-                        for (let i = 1; i < SWARM_COUNT; i++) {
-                            if (swarmN[i] < swarmN[smallest]) smallest = i;
-                        }
-                    }
-                }
-            }
-
-            // Guarantee no empty packs — seed from the largest
-            for (let i = 0; i < SWARM_COUNT; i++) {
-                if (swarmN[i] > 0) continue;
-                let largest = 0;
-                for (let j = 1; j < SWARM_COUNT; j++) {
-                    if (swarmN[j] > swarmN[largest]) largest = j;
-                }
-                if (swarmN[largest] <= 1) continue;
-                // Grab a few boids from the edge of the largest pack
-                const members = boids.filter(b => b.swarm === largest);
-                members.sort((a, b2) => {
-                    const da = Math.hypot(a.x - swarmCx[largest], a.y - swarmCy[largest]);
-                    const db = Math.hypot(b2.x - swarmCx[largest], b2.y - swarmCy[largest]);
-                    return db - da;
-                });
-                const toMove = Math.min(Math.floor(swarmN[largest] / 4), members.length);
-                for (let j = 0; j < toMove; j++) {
-                    swarmN[largest]--;
-                    members[j].swarm = i;
-                    swarmN[i]++;
-                }
-            }
-        }
-
-        // --- Background star particles ---
+        // Background stars with twinkling
         const stars = [];
         const STAR_COUNT = Math.min(140, Math.floor(window.innerWidth * window.innerHeight / 7000));
         for (let i = 0; i < STAR_COUNT; i++) {
@@ -866,8 +575,6 @@
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 r: Math.random() * 1.6 + 0.3,
-                dx: (Math.random() - 0.5) * 0.12,
-                dy: (Math.random() - 0.5) * 0.12,
                 base: Math.random() * 0.55 + 0.15,
                 phase: Math.random() * Math.PI * 2,
                 speed: Math.random() * 0.001 + 0.0004
@@ -876,13 +583,6 @@
 
         function drawStars(time) {
             for (const s of stars) {
-                s.x += s.dx;
-                s.y += s.dy;
-                if (s.x < -10) s.x = canvas.width + 10;
-                if (s.x > canvas.width + 10) s.x = -10;
-                if (s.y < -10) s.y = canvas.height + 10;
-                if (s.y > canvas.height + 10) s.y = -10;
-
                 const twinkle = Math.sin(time * s.speed + s.phase) * 0.4 + 0.6;
                 const alpha = s.base * twinkle;
                 ctx.beginPath();
@@ -892,91 +592,12 @@
             }
         }
 
-        // --- Combined render loop ---
+        // Combined render loop
         function drawFrame(time) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Particles first (behind boids)
             drawStars(time || 0);
-
-            // Rebalance packs then update boids
-            rebalanceSwarms();
-
-            for (const b of boids) {
-                b.flock(boids);
-                b.avoidMouse();
-                b.avoidEdges();
-                b.update();
-            }
-
-            // Draw boids with direction-colored tapered ribbon trails
-            const boidSize = 3;
-            const headHalfW = boidSize * 0.7;
-
-            for (const b of boids) {
-                const pts = b.trail;
-                const count = pts.length / 2;
-                const speed = Math.hypot(b.vx, b.vy);
-                const boidAlpha = 0.15 + (speed / MAX_SPEED) * 0.25;
-
-                // Draw ribbon trail if we have enough points
-                if (count >= 2) {
-                    const leftX = [], leftY = [], rightX = [], rightY = [];
-                    const segAngles = [];
-                    for (let i = 0; i < count; i++) {
-                        const px = pts[i * 2], py = pts[i * 2 + 1];
-                        let nx, ny;
-                        if (i < count - 1) {
-                            nx = pts[(i + 1) * 2] - px;
-                            ny = pts[(i + 1) * 2 + 1] - py;
-                        } else {
-                            nx = b.vx;
-                            ny = b.vy;
-                        }
-                        const len = Math.hypot(nx, ny) || 1;
-                        const perpX = -ny / len;
-                        const perpY = nx / len;
-                        segAngles.push(Math.atan2(ny, nx));
-
-                        const t = i / (count - 1);
-                        const halfW = t * headHalfW;
-
-                        leftX.push(px + perpX * halfW);
-                        leftY.push(py + perpY * halfW);
-                        rightX.push(px - perpX * halfW);
-                        rightY.push(py - perpY * halfW);
-                    }
-
-                    for (let i = 0; i < count - 1; i++) {
-                        const t = i / (count - 1);
-                        const alpha = t * boidAlpha * 0.7;
-                        const segAngle = segAngles[i];
-                        ctx.beginPath();
-                        ctx.moveTo(leftX[i], leftY[i]);
-                        ctx.lineTo(leftX[i + 1], leftY[i + 1]);
-                        ctx.lineTo(rightX[i + 1], rightY[i + 1]);
-                        ctx.lineTo(rightX[i], rightY[i]);
-                        ctx.closePath();
-                        ctx.fillStyle = dirToColor(segAngle, alpha);
-                        ctx.fill();
-                    }
-                }
-
-                // Draw boid triangle on top, colored by current direction
-                const angle = Math.atan2(b.vy, b.vx);
-                ctx.save();
-                ctx.translate(b.x, b.y);
-                ctx.rotate(angle);
-                ctx.beginPath();
-                ctx.moveTo(boidSize * 1.6, 0);
-                ctx.lineTo(-boidSize, boidSize * 0.7);
-                ctx.lineTo(-boidSize * 0.4, 0);
-                ctx.lineTo(-boidSize, -boidSize * 0.7);
-                ctx.closePath();
-                ctx.fillStyle = dirToColor(angle, boidAlpha);
-                ctx.fill();
-                ctx.restore();
-            }
+            updateParticles();
+            drawParticles(time || 0);
         }
 
         (function animate(t) {
@@ -1094,6 +715,41 @@
         // Start countdown immediately, then update every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // =====================================================
+        //  RAINBOW GLOW AROUND DIGITS
+        // =====================================================
+
+        function updateRainbowGlow(time) {
+            const slots = document.querySelectorAll('.digit-slot');
+            const speed = 0.00025;
+            const positions = 8;
+
+            slots.forEach((slot, slotIndex) => {
+                const phaseOffset = slotIndex * 0.6;
+                const shadows = [];
+
+                for (let i = 0; i < positions; i++) {
+                    const angle = (i / positions) * Math.PI * 2;
+                    const x = Math.cos(angle);
+                    const y = Math.sin(angle);
+
+                    const t = ((i / positions) + time * speed + phaseOffset) % 1;
+                    const hue = ((t % 1) + 1) % 1 * 360;
+
+                    shadows.push(`${(x * 1).toFixed(1)}px ${(y * 1).toFixed(1)}px 2px hsla(${hue}, 100%, 55%, 0.45)`);
+                    shadows.push(`${(x * 2.5).toFixed(1)}px ${(y * 2.5).toFixed(1)}px 6px hsla(${hue}, 100%, 50%, 0.2)`);
+                    shadows.push(`${(x * 4).toFixed(1)}px ${(y * 4).toFixed(1)}px 12px hsla(${hue}, 100%, 50%, 0.1)`);
+                }
+
+                slot.style.textShadow = shadows.join(', ');
+            });
+        }
+
+        (function animateGlow(t) {
+            updateRainbowGlow(t || 0);
+            requestAnimationFrame(animateGlow);
+        })();
 
         // =====================================================
         //  CONTACT FORM
