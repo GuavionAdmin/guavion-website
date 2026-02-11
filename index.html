@@ -182,7 +182,7 @@
             border-top-color: rgba(255, 255, 255, 0.45);
             border-left-color: rgba(255, 255, 255, 0.35);
             border-radius: 16px;
-            padding: 5px 20px 16px 20px;
+            padding: 5px clamp(10px, 3vw, 20px) clamp(10px, 2.5vw, 16px);
             box-shadow:
                 inset 0 1px 1px rgba(255, 255, 255, 0.4),
                 inset 0 -1px 1px rgba(0, 0, 0, 0.08),
@@ -216,7 +216,7 @@
             overflow: visible;
             clip-path: inset(-2px -20px);
             position: relative;
-            font-size: 3.2rem;
+            font-size: clamp(1.8rem, 6vw, 3.2rem);
             font-weight: 900;
             font-variant-numeric: tabular-nums;
             color: #000000;
@@ -454,12 +454,47 @@
         }
 
         @media (max-width: 540px) {
+            body {
+                justify-content: flex-start;
+            }
+
+            .content {
+                gap: 24px;
+                padding-top: 32px;
+                padding-bottom: 32px;
+            }
+
+            .title {
+                font-size: clamp(2.2rem, 10vw, 3.5rem);
+            }
+
+            .countdown-sep {
+                font-size: clamp(1.6rem, 5vw, 2.4rem);
+            }
+
+            .countdown-unit {
+                border-radius: 10px;
+            }
+
             .contact-form .form-row {
                 flex-direction: column;
             }
 
+            .contact-card {
+                border-radius: 16px;
+            }
+
             .contact-card-inner {
-                padding: 24px 18px 22px;
+                padding: 20px 16px 20px;
+                border-radius: 14px;
+            }
+
+            .form-header-title {
+                font-size: 1.3rem;
+            }
+
+            .form-submit {
+                padding: 14px;
             }
         }
     </style>
@@ -585,6 +620,15 @@
             mouse.active = true;
         });
         document.addEventListener('mouseleave', () => {
+            mouse.active = false;
+        });
+        document.addEventListener('touchmove', (e) => {
+            const t = e.touches[0];
+            mouse.x = t.clientX;
+            mouse.y = t.clientY;
+            mouse.active = true;
+        }, { passive: true });
+        document.addEventListener('touchend', () => {
             mouse.active = false;
         });
 
