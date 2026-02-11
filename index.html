@@ -271,7 +271,7 @@
         /* --- Contact Card Wrapper --- */
         .contact-card {
             position: relative;
-            width: min(700px, 90vw);
+            width: var(--card-width, min(700px, 90vw));
             padding: 2px;
             border-radius: 20px;
             background: conic-gradient(from var(--card-angle, 0deg),
@@ -465,7 +465,7 @@
             }
 
             .title {
-                font-size: clamp(2.2rem, 10vw, 3.5rem);
+                font-size: clamp(3rem, 14vw, 5rem);
             }
 
             .countdown-sep {
@@ -632,56 +632,51 @@
             mouse.active = false;
         });
 
-        // Floating particles — slow, gentle drifting effect
+        // Floating particles — always drifting, react to mouse
         const particles = [];
-        const PARTICLE_COUNT = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 10000));
+        const PARTICLE_COUNT = Math.min(200, Math.floor(window.innerWidth * window.innerHeight / 4000));
 
         for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 0.4 + 0.15;
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.08,
-                vy: (Math.random() - 0.5) * 0.06 - 0.02, // slight upward bias
-                r: Math.random() * 1.2 + 0.4,
-                life: Math.random() * 0.6 + 0.4,
-                maxLife: 1.0,
+                baseVx: Math.cos(angle) * speed,
+                baseVy: Math.sin(angle) * speed,
+                pushVx: 0,
+                pushVy: 0,
+                r: Math.random() * 1.4 + 0.4,
                 phase: Math.random() * Math.PI * 2
             });
         }
 
         function updateParticles() {
             for (const p of particles) {
-                // Mouse repulsion
+                // Mouse repulsion — adds temporary push velocity
                 if (mouse.active) {
                     const dx = p.x - mouse.x;
                     const dy = p.y - mouse.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < MOUSE_RADIUS && dist > 0) {
                         const force = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE;
-                        p.vx += (dx / dist) * force;
-                        p.vy += (dy / dist) * force;
+                        p.pushVx += (dx / dist) * force;
+                        p.pushVy += (dy / dist) * force;
                     }
                 }
 
-                // Dampen velocity so particles settle back
-                p.vx *= 0.96;
-                p.vy *= 0.96;
+                // Dampen only the push velocity, not the base drift
+                p.pushVx *= 0.94;
+                p.pushVy *= 0.94;
 
-                // Restore gentle drift
-                p.vx += (Math.random() - 0.5) * 0.005;
-                p.vy -= 0.0005;
+                p.x += p.baseVx + p.pushVx;
+                p.y += p.baseVy + p.pushVy;
 
-                p.x += p.vx;
-                p.y += p.vy;
-
-                // Wrap around edges with fade
+                // Wrap around edges
                 const margin = 50;
                 if (p.x < -margin) p.x = canvas.width + margin;
                 if (p.x > canvas.width + margin) p.x = -margin;
-                if (p.y < -margin) {
-                    p.y = canvas.height + margin;
-                    p.life = Math.random() * 0.6 + 0.4;
-                }
+                if (p.y < -margin) p.y = canvas.height + margin;
                 if (p.y > canvas.height + margin) p.y = -margin;
             }
         }
@@ -859,6 +854,17 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
+        // Sync contact card width to title width
+        function syncCardWidth() {
+            const title = document.getElementById('title');
+            const card = document.querySelector('.contact-card');
+            if (title && card) {
+                card.style.setProperty('--card-width', title.offsetWidth + 'px');
+            }
+        }
+        syncCardWidth();
+        window.addEventListener('resize', syncCardWidth);
+
         // =====================================================
         //  RAINBOW GLOW AROUND DIGITS
         // =====================================================
@@ -949,6 +955,20 @@
             submitBtn.disabled = false;
             submitBtn.textContent = 'Send';
         });
+
+        // Hide overflow on mobile if content fits in viewport
+        function checkOverflow() {
+            const content = document.querySelector('.content');
+            if (content.scrollHeight <= window.innerHeight) {
+                document.body.style.overflow = 'hidden';
+                document.body.style.justifyContent = 'center';
+            } else {
+                document.body.style.overflow = 'auto';
+                document.body.style.justifyContent = '';
+            }
+        }
+        checkOverflow();
+        window.addEventListener('resize', checkOverflow);
     </script>
 </body>
 
