@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,13 +20,14 @@
         }
 
         :root {
-            --clock-size: 8px;
-            --transition-speed: 0.8s;
             --bg-top: #070b1a;
             --bg-bottom: #0d1333;
-            --accent: #00d2ff;
-            --glow: rgba(0, 210, 255, 0.12);
+            --accent: #3cdc78;
+            --glow: rgba(60, 220, 120, 0.12);
             --text-color: rgba(255, 255, 255, 0.7);
+            --muted-color: rgba(255, 255, 255, 0.15);
+            --panel-bg: rgba(255, 255, 255, 0.06);
+            --panel-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -32,9 +36,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             background: linear-gradient(170deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-            overflow: hidden;
+            overflow: auto;
             color: #fff;
         }
 
@@ -97,6 +101,7 @@
             flex-direction: column;
             align-items: center;
             gap: 36px;
+            padding-top: 60px;
             animation: fadeUp 1.2s ease-out both;
         }
 
@@ -114,15 +119,16 @@
 
         /* --- Title --- */
         .title {
-            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-size: clamp(3rem, 8vw, 6.5rem);
             font-weight: 900;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             filter: drop-shadow(0 0 40px var(--glow));
             animation: fadeUp 1.2s ease-out both;
             animation-delay: 0.15s;
             display: flex;
             cursor: default;
+            font-family: "Cherry Bomb One", system-ui;
         }
 
         .title .letter {
@@ -166,122 +172,70 @@
             }
         }
 
-        /* --- Countdown Panel --- */
-        .countdown-panel {
-            background: rgba(12, 12, 18, 0.8);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 24px;
-            padding: 32px 36px 28px;
-            box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.45),
-                0 0 60px var(--glow);
+        /* --- Countdown --- */
+        .countdown-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             animation: fadeUp 1.2s ease-out both;
             animation-delay: 0.3s;
         }
 
-        .countdown-groups {
+        .countdown-row {
             display: flex;
-            align-items: flex-start;
-            gap: 8px;
+            align-items: baseline;
         }
 
-        .countdown-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .digit-row {
-            display: flex;
-            gap: calc(var(--clock-size) * 0.35);
-        }
-
-        .group-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--accent);
-            opacity: 0.7;
-        }
-
-        /* --- Colon Separators --- */
-        .sep {
+        .countdown-unit {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-            padding: 28px 2px 0;
         }
 
-        .sep-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: pulse 2s ease-in-out infinite;
+        .digit-group {
+            display: flex;
         }
 
-        .sep-dot:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 0.25;
-                transform: scale(0.7);
-            }
-
-            50% {
-                opacity: 0.75;
-                transform: scale(1.3);
-            }
-        }
-
-        /* --- Kinetic Clock Elements --- */
-        .digit-grid {
-            display: grid;
-            grid-template-columns: repeat(8, var(--clock-size));
-            grid-template-rows: repeat(12, var(--clock-size));
-            gap: 1px;
-        }
-
-        .clock {
-            width: var(--clock-size);
-            height: var(--clock-size);
-            border-radius: 50%;
+        .digit-slot {
+            width: 0.65em;
+            height: 1.15em;
+            overflow: hidden;
             position: relative;
-            background: radial-gradient(circle at 30% 30%, #2a2a2a, #141414);
+            font-size: clamp(3.2rem, 9vw, 6rem);
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+            color: #fff;
+            text-align: center;
+            line-height: 1.15em;
         }
 
-        .hand {
-            position: absolute;
-            left: 50%;
-            bottom: 50%;
-            width: 2px;
-            height: 45%;
-            transform-origin: bottom center;
-            border-radius: 1px;
-            will-change: transform;
-            transition: all var(--transition-speed) cubic-bezier(0.5, 0, 0.2, 1);
-            background-color: rgba(55, 55, 55, 0.9);
+        .digit-slot .digit-inner {
+            display: flex;
+            flex-direction: column;
         }
 
-        .hand.active {
-            background-color: rgba(255, 255, 255, 0.92);
+        .digit-slot .digit-inner .d-top,
+        .digit-slot .digit-inner .d-bot {
+            height: 1.15em;
+            line-height: 1.15em;
+            text-align: center;
         }
 
-        .hand.hour {
-            z-index: 2;
+        .countdown-sep {
+            font-size: clamp(2.4rem, 7vw, 4.5rem);
+            font-weight: 200;
+            color: rgba(255, 255, 255, 0.2);
+            padding: 0 clamp(2px, 0.8vw, 8px);
         }
 
-        .hand.minute {
-            z-index: 1;
+        .unit-label {
+            font-size: clamp(0.5rem, 1.2vw, 0.7rem);
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.5;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
         }
 
         /* --- Subtitle --- */
@@ -322,10 +276,10 @@
         .contact-form .field input,
         .contact-form .field textarea {
             width: 100%;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--panel-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--panel-border);
             border-radius: 12px;
             padding: 30px 15px 12px;
             color: var(--text-color);
@@ -337,10 +291,10 @@
         }
 
         .form-header {
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--panel-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--panel-border);
             border-radius: 12px;
             padding: 16px 20px;
             font-size: 0.65rem;
@@ -350,7 +304,9 @@
             color: var(--accent);
         }
 
-        .contact-form .field.full textarea { border-radius: 12px; }
+        .contact-form .field.full textarea {
+            border-radius: 12px;
+        }
 
         .contact-form .field label {
             position: absolute;
@@ -366,19 +322,19 @@
             transition: opacity 0.3s ease;
         }
 
-        .contact-form .field input:focus ~ label,
-        .contact-form .field textarea:focus ~ label {
+        .contact-form .field input:focus~label,
+        .contact-form .field textarea:focus~label {
             opacity: 0.9;
         }
 
         .contact-form .field input::placeholder,
         .contact-form .field textarea::placeholder {
-            color: rgba(255, 255, 255, 0.15);
+            color: var(--muted-color);
         }
 
         .contact-form .field input:focus,
         .contact-form .field textarea:focus {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--panel-bg);
             border-color: var(--accent);
             z-index: 1;
             position: relative;
@@ -391,16 +347,24 @@
             transition: opacity 0.3s ease;
         }
 
-        .form-status:empty { display: none; }
-        .form-status.success { color: #34d399; }
-        .form-status.error { color: #f87171; }
+        .form-status:empty {
+            display: none;
+        }
+
+        .form-status.success {
+            color: #34d399;
+        }
+
+        .form-status.error {
+            color: #f87171;
+        }
 
         .form-submit {
             width: 100%;
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--panel-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--panel-border);
             color: var(--text-color);
             font-family: inherit;
             font-size: 0.8rem;
@@ -445,71 +409,6 @@
             }
         }
 
-        /* --- Responsive --- */
-        @media (max-width: 820px) {
-            :root {
-                --clock-size: 6px;
-            }
-
-            .countdown-panel {
-                padding: 24px 20px 20px;
-                border-radius: 18px;
-            }
-
-            .countdown-groups {
-                gap: 6px;
-            }
-        }
-
-        @media (max-width: 540px) {
-            :root {
-                --clock-size: 4px;
-            }
-
-            .countdown-panel {
-                padding: 18px 12px 14px;
-                border-radius: 14px;
-            }
-
-            .countdown-groups {
-                gap: 4px;
-            }
-
-            .group-label {
-                font-size: 0.5rem;
-                letter-spacing: 0.15em;
-            }
-
-            .sep {
-                gap: 14px;
-                padding-top: 18px;
-            }
-
-            .sep-dot {
-                width: 3px;
-                height: 3px;
-            }
-
-            .hand {
-                width: 1.5px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            :root {
-                --clock-size: 3px;
-            }
-
-            .countdown-groups {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px 4px;
-            }
-
-            .sep {
-                display: none;
-            }
-        }
     </style>
 </head>
 
@@ -526,35 +425,26 @@
                 class="letter">N</span>
         </h1>
 
-        <div class="countdown-panel" id="panel">
-            <div class="countdown-groups">
-                <div class="countdown-group">
-                    <div class="digit-row" id="g-days"></div>
-                    <div class="group-label">Days</div>
+        <div class="countdown-container" id="countdown-container">
+            <div class="countdown-row">
+                <div class="countdown-unit">
+                    <div class="digit-group" id="d-days"></div>
+                    <div class="unit-label">days</div>
                 </div>
-                <div class="sep">
-                    <div class="sep-dot"></div>
-                    <div class="sep-dot"></div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <div class="digit-group" id="d-hours"></div>
+                    <div class="unit-label">hrs</div>
                 </div>
-                <div class="countdown-group">
-                    <div class="digit-row" id="g-hours"></div>
-                    <div class="group-label">Hours</div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <div class="digit-group" id="d-mins"></div>
+                    <div class="unit-label">min</div>
                 </div>
-                <div class="sep">
-                    <div class="sep-dot"></div>
-                    <div class="sep-dot"></div>
-                </div>
-                <div class="countdown-group">
-                    <div class="digit-row" id="g-mins"></div>
-                    <div class="group-label">Minutes</div>
-                </div>
-                <div class="sep">
-                    <div class="sep-dot"></div>
-                    <div class="sep-dot"></div>
-                </div>
-                <div class="countdown-group">
-                    <div class="digit-row" id="g-secs"></div>
-                    <div class="group-label">Seconds</div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                    <div class="digit-group" id="d-secs"></div>
+                    <div class="unit-label">sec</div>
                 </div>
             </div>
         </div>
@@ -586,219 +476,27 @@
 
     <script>
         // =====================================================
-        //  ANGLE & CHARACTER MAPS (from kinetic clock project)
+        //  THEME
         // =====================================================
-
-        const A = {
-            '|': [0, 180], '-': [90, 270],
-            'r': [90, 180], '7': [180, 270],
-            'L': [0, 90], 'J': [0, 270],
-            '.': [225, 225]
-        };
-
-        const C = {
-            '0': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '7', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', 'L', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            '1': [
-                '.', '.', '.', '.', '.', 'r', '-', '7',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', 'L', '-', 'J'
-            ],
-            '2': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                'r', '-', '-', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '-', '-', 'J',
-                '|', '.', '|', '.', '.', '.', '.', '.',
-                '|', '.', '|', '.', '.', '.', '.', '.',
-                '|', '.', 'L', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            '3': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', 'r', '-', '-', '-', 'J', '.', '|',
-                '.', '|', '.', '.', '.', '.', '.', '|',
-                '.', 'L', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                'r', '-', '-', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            '4': [
-                'r', '-', '7', '.', '.', 'r', '-', '7',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', 'L', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', 'L', '-', 'J'
-            ],
-            '5': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '-', '-', 'J',
-                '|', '.', '|', '.', '.', '.', '.', '.',
-                '|', '.', 'L', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                'r', '-', '-', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            '6': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '-', '-', 'J',
-                '|', '.', '|', '.', '.', '.', '.', '.',
-                '|', '.', 'L', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '7', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', 'L', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            '7': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', 'L', '-', 'J'
-            ],
-            '8': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '7', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', 'L', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '7', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', 'L', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            '9': [
-                'r', '-', '-', '-', '-', '-', '-', '7',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                '|', '.', 'r', '-', '-', '7', '.', '|',
-                '|', '.', '|', '.', '.', '|', '.', '|',
-                '|', '.', 'L', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '7', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                '.', '.', '.', '.', '.', '|', '.', '|',
-                'r', '-', '-', '-', '-', 'J', '.', '|',
-                '|', '.', '.', '.', '.', '.', '.', '|',
-                'L', '-', '-', '-', '-', '-', '-', 'J'
-            ],
-            ' ': Array(96).fill('.')
-        };
-
-        // =====================================================
-        //  TIME-OF-DAY COLOR SYSTEM
-        // =====================================================
-
-        const TIME_STOPS = [
-            { h: 0, top: [7, 11, 26], bot: [13, 19, 51], acc: [91, 141, 239] },
-            { h: 4, top: [10, 14, 39], bot: [26, 16, 64], acc: [139, 92, 246] },
-            { h: 5.5, top: [26, 14, 61], bot: [61, 31, 109], acc: [192, 132, 252] },
-            { h: 6.5, top: [120, 50, 30], bot: [249, 115, 22], acc: [251, 146, 60] },
-            { h: 8, top: [30, 64, 175], bot: [59, 130, 246], acc: [96, 165, 250] },
-            { h: 11, top: [3, 105, 161], bot: [56, 189, 248], acc: [34, 211, 238] },
-            { h: 14, top: [30, 64, 175], bot: [99, 102, 241], acc: [129, 140, 248] },
-            { h: 17, top: [147, 51, 234], bot: [249, 115, 22], acc: [245, 158, 11] },
-            { h: 18.5, top: [88, 28, 135], bot: [147, 51, 234], acc: [192, 132, 252] },
-            { h: 20, top: [30, 27, 75], bot: [15, 23, 42], acc: [99, 102, 241] },
-            { h: 22, top: [7, 11, 26], bot: [13, 19, 51], acc: [91, 141, 239] },
-            { h: 24, top: [7, 11, 26], bot: [13, 19, 51], acc: [91, 141, 239] },
-        ];
-
-        function lerpC(a, b, t) {
-            return [
-                Math.round(a[0] + (b[0] - a[0]) * t),
-                Math.round(a[1] + (b[1] - a[1]) * t),
-                Math.round(a[2] + (b[2] - a[2]) * t)
-            ];
-        }
-
-        function rgb(c) { return `rgb(${c[0]},${c[1]},${c[2]})`; }
-
-        function getTimeTheme() {
-            const now = new Date();
-            const hour = now.getHours() + now.getMinutes() / 60;
-            let i = 0;
-            while (i < TIME_STOPS.length - 1 && TIME_STOPS[i + 1].h <= hour) i++;
-            const a = TIME_STOPS[i], b = TIME_STOPS[Math.min(i + 1, TIME_STOPS.length - 1)];
-            const range = b.h - a.h || 1;
-            const t = Math.max(0, Math.min(1, (hour - a.h) / range));
-            return {
-                top: lerpC(a.top, b.top, t),
-                bot: lerpC(a.bot, b.bot, t),
-                acc: lerpC(a.acc, b.acc, t)
-            };
-        }
 
         function applyTheme() {
-            const th = getTimeTheme();
-            document.documentElement.style.setProperty('--bg-top', rgb(th.top));
-            document.documentElement.style.setProperty('--bg-bottom', rgb(th.bot));
-            document.documentElement.style.setProperty('--accent', rgb(th.acc));
-            document.documentElement.style.setProperty('--glow',
-                `rgba(${th.acc[0]},${th.acc[1]},${th.acc[2]},0.12)`);
-            // Text color: invert the background brightness for contrast
-            const avg = (th.top[0] + th.top[1] + th.top[2] + th.bot[0] + th.bot[1] + th.bot[2]) / 6;
-            const textLight = avg < 128;
-            document.documentElement.style.setProperty('--text-color',
-                textLight ? 'rgba(255, 255, 255, 0.85)' : 'rgba(10, 10, 20, 0.85)');
-            document.body.style.background =
-                `linear-gradient(170deg, ${rgb(th.top)} 0%, ${rgb(th.bot)} 100%)`;
-            return th;
+            const ds = document.documentElement.style;
+            ds.setProperty('--bg-top', '#000000');
+            ds.setProperty('--bg-bottom', '#000000');
+            ds.setProperty('--accent', 'rgb(60,220,120)');
+            ds.setProperty('--glow', 'rgba(60,220,120,0.12)');
+            ds.setProperty('--text-color', 'rgba(255, 255, 255, 0.9)');
+            ds.setProperty('--muted-color', 'rgba(255, 255, 255, 0.15)');
+            ds.setProperty('--panel-bg', 'rgba(255, 255, 255, 0.06)');
+            ds.setProperty('--panel-border', 'rgba(255, 255, 255, 0.1)');
+            document.body.style.background = '#000000';
+            return { acc: [60, 220, 120] };
+        }
+
+        // Convert direction angle (radians) to an HSL color string
+        function dirToColor(angle, alpha) {
+            const hue = ((angle * 180 / Math.PI) + 360) % 360;
+            return `hsla(${hue}, 85%, 60%, ${alpha})`;
         }
 
         // =====================================================
@@ -829,7 +527,7 @@
         // Boid parameters
         const BOID_COUNT = 150;
         const MAX_SPEED = 1;
-        const MIN_SPEED = 1.2;
+        const MIN_SPEED = 0.45;
         const MAX_FORCE = 0.045;     // gentle steering = smooth arcs
         const PERCEPTION = 90;       // wider neighborhood = larger flocks
         const SEP_RADIUS = 24;       // separation distance
@@ -843,16 +541,20 @@
         const W_ALI = 1.2;
         const W_COH = 0.8;
 
+        const TRAIL_LENGTH = 50;
+
         class Boid {
-            constructor(x, y) {
+            constructor(x, y, swarm) {
                 this.x = x;
                 this.y = y;
+                this.swarm = swarm;
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * (MAX_SPEED - MIN_SPEED) + MIN_SPEED;
                 this.vx = Math.cos(angle) * speed;
                 this.vy = Math.sin(angle) * speed;
                 this.ax = 0;
                 this.ay = 0;
+                this.trail = [];
             }
 
             applyForce(fx, fy) {
@@ -886,7 +588,8 @@
                         sepY -= dy / dist / dist;
                         sepN++;
                     }
-                    if (dist < PERCEPTION) {
+
+                    if (other.swarm === this.swarm && dist < PERCEPTION) {
                         aliX += other.vx;
                         aliY += other.vy;
                         aliN++;
@@ -896,18 +599,13 @@
                     }
                 }
 
-                // Separation
                 if (sepN > 0) {
                     const mag = Math.hypot(sepX, sepY);
-                    if (mag > 0) {
-                        sepX = sepX / mag * MAX_SPEED;
-                        sepY = sepY / mag * MAX_SPEED;
-                    }
+                    if (mag > 0) { sepX = sepX / mag * MAX_SPEED; sepY = sepY / mag * MAX_SPEED; }
                     const [sx, sy] = this.steer(sepX, sepY);
                     this.applyForce(sx * W_SEP, sy * W_SEP);
                 }
 
-                // Alignment
                 if (aliN > 0) {
                     aliX /= aliN; aliY /= aliN;
                     const mag = Math.hypot(aliX, aliY);
@@ -916,14 +614,31 @@
                     this.applyForce(sx * W_ALI, sy * W_ALI);
                 }
 
-                // Cohesion
+                // If pack is overcrowded, weaken cohesion and push away from center
+                const packSize = swarmN[this.swarm] || 1;
+                const overcrowded = packSize > SWARM_CAP;
+                const cohScale = overcrowded ? 0.2 : 1;
+
                 if (cohN > 0) {
                     cohX = cohX / cohN - this.x;
                     cohY = cohY / cohN - this.y;
                     const mag = Math.hypot(cohX, cohY);
                     if (mag > 0) { cohX = cohX / mag * MAX_SPEED; cohY = cohY / mag * MAX_SPEED; }
                     const [sx, sy] = this.steer(cohX, cohY);
-                    this.applyForce(sx * W_COH, sy * W_COH);
+                    this.applyForce(sx * W_COH * cohScale, sy * W_COH * cohScale);
+                }
+
+                // Overcrowded boids flee their pack center
+                if (overcrowded) {
+                    const cx = swarmCx[this.swarm];
+                    const cy = swarmCy[this.swarm];
+                    const dx = this.x - cx;
+                    const dy = this.y - cy;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist > 0) {
+                        const flee = 0.08;
+                        this.applyForce(dx / dist * flee, dy / dist * flee);
+                    }
                 }
             }
 
@@ -963,6 +678,12 @@
                 this.ax = 0;
                 this.ay = 0;
 
+                // Record trail
+                this.trail.push(this.x, this.y);
+                if (this.trail.length > TRAIL_LENGTH * 2) {
+                    this.trail.splice(0, 2);
+                }
+
                 // Wrap as fallback
                 const w = canvas.width, h = canvas.height;
                 if (this.x < -20) this.x = w + 20;
@@ -972,22 +693,170 @@
             }
         }
 
-        // Initialize boids in a few clusters (swarms)
+        // Initialize boids in separate swarms
         const boids = [];
         const SWARM_COUNT = 4;
+        const SWARM_CAP = Math.ceil(BOID_COUNT / SWARM_COUNT * 1.35);
+
         for (let s = 0; s < SWARM_COUNT; s++) {
-            const cx = Math.random() * canvas.width;
-            const cy = Math.random() * canvas.height;
+            const cx = (s % 2 + 0.5) / 2 * canvas.width + (Math.random() - 0.5) * 100;
+            const cy = (Math.floor(s / 2) + 0.5) / 2 * canvas.height + (Math.random() - 0.5) * 100;
             const n = Math.floor(BOID_COUNT / SWARM_COUNT);
             for (let i = 0; i < n; i++) {
                 boids.push(new Boid(
-                    cx + (Math.random() - 0.5) * 120,
-                    cy + (Math.random() - 0.5) * 120
+                    cx + (Math.random() - 0.5) * 100,
+                    cy + (Math.random() - 0.5) * 100,
+                    s
                 ));
             }
         }
 
-        let currentAccent = [0, 210, 255];
+        // Dynamic pack rebalancing — runs each frame
+        const swarmCx = new Float64Array(SWARM_COUNT);
+        const swarmCy = new Float64Array(SWARM_COUNT);
+        const swarmN = new Uint16Array(SWARM_COUNT);
+        const EVEN_COUNT = Math.floor(BOID_COUNT / SWARM_COUNT);
+        const swarmOverTime = new Float64Array(SWARM_COUNT); // seconds each pack has been oversized
+        let lastRebalanceTime = performance.now();
+
+        function rebalanceSwarms() {
+            const now = performance.now();
+            const dt = (now - lastRebalanceTime) / 1000; // seconds since last call
+            lastRebalanceTime = now;
+
+            // Compute centroids and counts
+            swarmCx.fill(0); swarmCy.fill(0); swarmN.fill(0);
+            for (const b of boids) {
+                swarmCx[b.swarm] += b.x;
+                swarmCy[b.swarm] += b.y;
+                swarmN[b.swarm]++;
+            }
+            for (let i = 0; i < SWARM_COUNT; i++) {
+                if (swarmN[i] > 0) {
+                    swarmCx[i] /= swarmN[i];
+                    swarmCy[i] /= swarmN[i];
+                }
+            }
+
+            // Track how long each pack has been above even distribution
+            for (let i = 0; i < SWARM_COUNT; i++) {
+                if (swarmN[i] > EVEN_COUNT) {
+                    swarmOverTime[i] += dt;
+                } else {
+                    swarmOverTime[i] = 0;
+                }
+            }
+
+            // Find the smallest pack
+            let smallest = 0;
+            for (let i = 1; i < SWARM_COUNT; i++) {
+                if (swarmN[i] < swarmN[smallest]) smallest = i;
+            }
+
+            // Force-eject boids from packs that have been oversized for 3+ seconds
+            for (let s = 0; s < SWARM_COUNT; s++) {
+                if (swarmOverTime[s] < 3) continue;
+                if (swarmN[s] <= EVEN_COUNT) continue;
+
+                // Eject a batch of boids to bring closer to even
+                const excess = swarmN[s] - EVEN_COUNT;
+                const toEject = Math.max(1, Math.ceil(excess * 0.4));
+                const members = boids.filter(b => b.swarm === s);
+                // Sort by distance from center — eject outermost first
+                members.sort((a, b2) => {
+                    const da = Math.hypot(a.x - swarmCx[s], a.y - swarmCy[s]);
+                    const db = Math.hypot(b2.x - swarmCx[s], b2.y - swarmCy[s]);
+                    return db - da;
+                });
+
+                let ejected = 0;
+                for (let j = 0; j < members.length && ejected < toEject; j++) {
+                    const b = members[j];
+                    // Find best target pack
+                    let target = -1, targetDist = Infinity;
+                    for (let i = 0; i < SWARM_COUNT; i++) {
+                        if (i === s || swarmN[i] >= SWARM_CAP) continue;
+                        const d = Math.hypot(b.x - swarmCx[i], b.y - swarmCy[i]);
+                        if (d < targetDist) { targetDist = d; target = i; }
+                    }
+                    if (target < 0 && smallest !== s && swarmN[smallest] < SWARM_CAP) {
+                        target = smallest;
+                    }
+                    if (target >= 0) {
+                        swarmN[b.swarm]--;
+                        b.swarm = target;
+                        swarmN[target]++;
+                        ejected++;
+                        if (swarmN[target] > swarmN[smallest]) {
+                            smallest = 0;
+                            for (let i = 1; i < SWARM_COUNT; i++) {
+                                if (swarmN[i] < swarmN[smallest]) smallest = i;
+                            }
+                        }
+                    }
+                }
+                // Reset the timer so we don't eject every single frame
+                swarmOverTime[s] = 0;
+            }
+
+            // Boids in oversized packs leave on their own (cap-based)
+            for (const b of boids) {
+                if (swarmN[b.swarm] <= SWARM_CAP) continue;
+
+                const myDist = Math.hypot(b.x - swarmCx[b.swarm], b.y - swarmCy[b.swarm]);
+                // Outliers leave first — the farther from center, the more likely
+                if (Math.random() > myDist / 300) continue;
+
+                // Try to join a nearby smaller pack, or the smallest one
+                let target = -1, targetDist = Infinity;
+                for (let i = 0; i < SWARM_COUNT; i++) {
+                    if (i === b.swarm || swarmN[i] >= SWARM_CAP) continue;
+                    const d = Math.hypot(b.x - swarmCx[i], b.y - swarmCy[i]);
+                    if (d < targetDist) { targetDist = d; target = i; }
+                }
+
+                // If no nearby pack, join the smallest
+                if (target < 0 && smallest !== b.swarm && swarmN[smallest] < SWARM_CAP) {
+                    target = smallest;
+                }
+
+                if (target >= 0) {
+                    swarmN[b.swarm]--;
+                    b.swarm = target;
+                    swarmN[target]++;
+                    // Update smallest tracker
+                    if (swarmN[target] > swarmN[smallest]) {
+                        smallest = 0;
+                        for (let i = 1; i < SWARM_COUNT; i++) {
+                            if (swarmN[i] < swarmN[smallest]) smallest = i;
+                        }
+                    }
+                }
+            }
+
+            // Guarantee no empty packs — seed from the largest
+            for (let i = 0; i < SWARM_COUNT; i++) {
+                if (swarmN[i] > 0) continue;
+                let largest = 0;
+                for (let j = 1; j < SWARM_COUNT; j++) {
+                    if (swarmN[j] > swarmN[largest]) largest = j;
+                }
+                if (swarmN[largest] <= 1) continue;
+                // Grab a few boids from the edge of the largest pack
+                const members = boids.filter(b => b.swarm === largest);
+                members.sort((a, b2) => {
+                    const da = Math.hypot(a.x - swarmCx[largest], a.y - swarmCy[largest]);
+                    const db = Math.hypot(b2.x - swarmCx[largest], b2.y - swarmCy[largest]);
+                    return db - da;
+                });
+                const toMove = Math.min(Math.floor(swarmN[largest] / 4), members.length);
+                for (let j = 0; j < toMove; j++) {
+                    swarmN[largest]--;
+                    members[j].swarm = i;
+                    swarmN[i]++;
+                }
+            }
+        }
 
         // --- Background star particles ---
         const stars = [];
@@ -1006,11 +875,6 @@
         }
 
         function drawStars(time) {
-            const [r, g, b] = currentAccent;
-            const pr = Math.round(r + (255 - r) * 0.75);
-            const pg = Math.round(g + (255 - g) * 0.75);
-            const pb = Math.round(b + (255 - b) * 0.75);
-
             for (const s of stars) {
                 s.x += s.dx;
                 s.y += s.dy;
@@ -1023,7 +887,7 @@
                 const alpha = s.base * twinkle;
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${pr},${pg},${pb},${alpha})`;
+                ctx.fillStyle = `rgba(220,225,240,${alpha})`;
                 ctx.fill();
             }
         }
@@ -1035,33 +899,81 @@
             // Particles first (behind boids)
             drawStars(time || 0);
 
-            // Boids on top
-            const [cr, cg, cb] = currentAccent;
-            const br = Math.round(cr + (255 - cr) * 0.6);
-            const bg = Math.round(cg + (255 - cg) * 0.6);
-            const bb = Math.round(cb + (255 - cb) * 0.6);
+            // Rebalance packs then update boids
+            rebalanceSwarms();
 
             for (const b of boids) {
                 b.flock(boids);
                 b.avoidMouse();
                 b.avoidEdges();
                 b.update();
+            }
 
-                const angle = Math.atan2(b.vy, b.vx);
+            // Draw boids with direction-colored tapered ribbon trails
+            const boidSize = 3;
+            const headHalfW = boidSize * 0.7;
+
+            for (const b of boids) {
+                const pts = b.trail;
+                const count = pts.length / 2;
                 const speed = Math.hypot(b.vx, b.vy);
-                const alpha = 0.35 + (speed / MAX_SPEED) * 0.45;
-                const size = 3.5;
+                const boidAlpha = 0.15 + (speed / MAX_SPEED) * 0.25;
 
+                // Draw ribbon trail if we have enough points
+                if (count >= 2) {
+                    const leftX = [], leftY = [], rightX = [], rightY = [];
+                    const segAngles = [];
+                    for (let i = 0; i < count; i++) {
+                        const px = pts[i * 2], py = pts[i * 2 + 1];
+                        let nx, ny;
+                        if (i < count - 1) {
+                            nx = pts[(i + 1) * 2] - px;
+                            ny = pts[(i + 1) * 2 + 1] - py;
+                        } else {
+                            nx = b.vx;
+                            ny = b.vy;
+                        }
+                        const len = Math.hypot(nx, ny) || 1;
+                        const perpX = -ny / len;
+                        const perpY = nx / len;
+                        segAngles.push(Math.atan2(ny, nx));
+
+                        const t = i / (count - 1);
+                        const halfW = t * headHalfW;
+
+                        leftX.push(px + perpX * halfW);
+                        leftY.push(py + perpY * halfW);
+                        rightX.push(px - perpX * halfW);
+                        rightY.push(py - perpY * halfW);
+                    }
+
+                    for (let i = 0; i < count - 1; i++) {
+                        const t = i / (count - 1);
+                        const alpha = t * boidAlpha * 0.7;
+                        const segAngle = segAngles[i];
+                        ctx.beginPath();
+                        ctx.moveTo(leftX[i], leftY[i]);
+                        ctx.lineTo(leftX[i + 1], leftY[i + 1]);
+                        ctx.lineTo(rightX[i + 1], rightY[i + 1]);
+                        ctx.lineTo(rightX[i], rightY[i]);
+                        ctx.closePath();
+                        ctx.fillStyle = dirToColor(segAngle, alpha);
+                        ctx.fill();
+                    }
+                }
+
+                // Draw boid triangle on top, colored by current direction
+                const angle = Math.atan2(b.vy, b.vx);
                 ctx.save();
                 ctx.translate(b.x, b.y);
                 ctx.rotate(angle);
                 ctx.beginPath();
-                ctx.moveTo(size * 1.6, 0);
-                ctx.lineTo(-size, size * 0.7);
-                ctx.lineTo(-size * 0.4, 0);
-                ctx.lineTo(-size, -size * 0.7);
+                ctx.moveTo(boidSize * 1.6, 0);
+                ctx.lineTo(-boidSize, boidSize * 0.7);
+                ctx.lineTo(-boidSize * 0.4, 0);
+                ctx.lineTo(-boidSize, -boidSize * 0.7);
                 ctx.closePath();
-                ctx.fillStyle = `rgba(${br},${bg},${bb},${alpha})`;
+                ctx.fillStyle = dirToColor(angle, boidAlpha);
                 ctx.fill();
                 ctx.restore();
             }
@@ -1073,116 +985,69 @@
         })();
 
         // =====================================================
-        //  KINETIC CLOCK CLASSES
-        // =====================================================
-
-        class KineticClock {
-            constructor(parent, idx) {
-                this.el = document.createElement('div');
-                this.el.className = 'clock';
-                this.hh = document.createElement('div');
-                this.hh.className = 'hand hour';
-                this.mm = document.createElement('div');
-                this.mm.className = 'hand minute';
-                this.el.appendChild(this.hh);
-                this.el.appendChild(this.mm);
-                parent.appendChild(this.el);
-
-                const d = idx * 0.002;
-                this.hh.style.transitionDelay = `${d}s`;
-                this.mm.style.transitionDelay = `${d}s`;
-                this.ch = 0; this.cm = 0;
-                this.setAngles(225, 225);
-            }
-
-            setAngles(h, m) {
-                while (this.ch % 360 !== h % 360) this.ch++;
-                while (this.cm % 360 !== m % 360) this.cm++;
-                this.hh.style.transform = `rotate(${this.ch}deg)`;
-                this.mm.style.transform = `rotate(${this.cm}deg)`;
-                this.hh.classList.toggle('active', h % 360 !== 225);
-                this.mm.classList.toggle('active', m % 360 !== 225);
-            }
-
-            spin(delay) {
-                setTimeout(() => {
-                    this.ch += 360; this.cm += 360;
-                    this.hh.style.transform = `rotate(${this.ch}deg)`;
-                    this.mm.style.transform = `rotate(${this.cm}deg)`;
-                }, delay);
-            }
-        }
-
-        class DigitGrid {
-            constructor(parent) {
-                this.grid = document.createElement('div');
-                this.grid.className = 'digit-grid';
-                parent.appendChild(this.grid);
-                this.clocks = [];
-                for (let i = 0; i < 96; i++) {
-                    this.clocks.push(new KineticClock(this.grid, i));
-                }
-            }
-
-            render(ch) {
-                const pat = C[ch] || C[' '];
-                pat.forEach((sym, i) => {
-                    const ang = A[sym] || A['.'];
-                    this.clocks[i].setAngles(ang[0], ang[1]);
-                });
-            }
-
-            spinWave(offset) {
-                this.clocks.forEach((c, i) => {
-                    const col = Math.floor((i % 8) / 2);
-                    c.spin((offset * 4 + col) * 80);
-                });
-            }
-
-            ripple(ox, oy) {
-                this.clocks.forEach(c => {
-                    const r = c.el.getBoundingClientRect();
-                    const dist = Math.hypot(r.left + r.width / 2 - ox, r.top + r.height / 2 - oy);
-                    c.spin(dist * 3);
-                });
-            }
-        }
-
-        // =====================================================
-        //  COUNTDOWN SETUP
+        //  ROLLING COUNTDOWN
         // =====================================================
 
         const TARGET = new Date('2026-06-08T00:00:00');
 
-        const groups = {
-            days: { el: document.getElementById('g-days'), count: 3, grids: [] },
-            hours: { el: document.getElementById('g-hours'), count: 2, grids: [] },
-            mins: { el: document.getElementById('g-mins'), count: 2, grids: [] },
-            secs: { el: document.getElementById('g-secs'), count: 2, grids: [] },
-        };
 
-        // Create digit grids
-        for (const key in groups) {
-            const g = groups[key];
-            for (let i = 0; i < g.count; i++) {
-                const dg = new DigitGrid(g.el);
-                g.grids.push(dg);
+        // Create digit slots — each slot has an inner column with two cells
+        // Rolls down: new value placed on top, inner slides down, then resets
+        function createDigitSlots(containerId, count) {
+            const el = document.getElementById(containerId);
+            const slots = [];
+            for (let i = 0; i < count; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'digit-slot';
+                const inner = document.createElement('div');
+                inner.className = 'digit-inner';
+                const top = document.createElement('div');
+                top.className = 'd-top';
+                top.textContent = '0';
+                const bot = document.createElement('div');
+                bot.className = 'd-bot';
+                bot.textContent = '0';
+                inner.appendChild(top);
+                inner.appendChild(bot);
+                slot.appendChild(inner);
+                el.appendChild(slot);
+                slots.push({ el: slot, inner, top, bot, value: '0', animating: false });
             }
+            return slots;
         }
 
-        // Click ripple on the panel
-        document.getElementById('panel').addEventListener('click', e => {
-            for (const key in groups) {
-                groups[key].grids.forEach(g => g.ripple(e.clientX, e.clientY));
-            }
-        });
+        const digitSlots = {
+            days: createDigitSlots('d-days', 3),
+            hours: createDigitSlots('d-hours', 2),
+            mins: createDigitSlots('d-mins', 2),
+            secs: createDigitSlots('d-secs', 2),
+        };
 
-        // Track previous values to skip redundant renders
-        let prev = { d: '', h: '', m: '', s: '' };
+        function updateDigit(slot, newVal) {
+            if (slot.value === newVal || slot.animating) return;
+            slot.animating = true;
+            // Place new value on top (hidden above), current value on bottom (visible)
+            slot.top.textContent = newVal;
+            slot.bot.textContent = slot.value;
+            // Reset to top position instantly
+            slot.inner.style.transition = 'none';
+            slot.inner.style.transform = 'translateY(-50%)';
+            // Force reflow then animate down
+            void slot.inner.offsetHeight;
+            slot.inner.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+            slot.inner.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                slot.bot.textContent = newVal;
+                slot.inner.style.transition = 'none';
+                slot.inner.style.transform = 'translateY(0)';
+                slot.value = newVal;
+                slot.animating = false;
+            }, 370);
+        }
 
         function updateCountdown() {
             const now = new Date();
-            let diff = Math.max(0, TARGET - now);
+            const diff = Math.max(0, TARGET - now);
             const totalSecs = Math.floor(diff / 1000);
 
             const d = Math.floor(totalSecs / 86400);
@@ -1195,10 +1060,18 @@
             const mStr = String(m).padStart(2, '0');
             const sStr = String(s).padStart(2, '0');
 
-            if (dStr !== prev.d) { groups.days.grids.forEach((g, i) => g.render(dStr[i])); prev.d = dStr; }
-            if (hStr !== prev.h) { groups.hours.grids.forEach((g, i) => g.render(hStr[i])); prev.h = hStr; }
-            if (mStr !== prev.m) { groups.mins.grids.forEach((g, i) => g.render(mStr[i])); prev.m = mStr; }
-            if (sStr !== prev.s) { groups.secs.grids.forEach((g, i) => g.render(sStr[i])); prev.s = sStr; }
+            function setGroup(slots, str) {
+                for (let i = 0; i < slots.length; i++) {
+                    const isLeadingZero = str[i] === '0' && i < slots.length - 1 && str.slice(0, i + 1) === '0'.repeat(i + 1);
+                    slots[i].el.style.display = isLeadingZero ? 'none' : '';
+                    if (!isLeadingZero) updateDigit(slots[i], str[i]);
+                }
+            }
+
+            setGroup(digitSlots.days, dStr);
+            setGroup(digitSlots.hours, hStr);
+            setGroup(digitSlots.mins, mStr);
+            setGroup(digitSlots.secs, sStr);
         }
 
         // =====================================================
@@ -1209,29 +1082,18 @@
         document.querySelectorAll('.title .letter').forEach(el => {
             el.addEventListener('click', () => {
                 el.classList.remove('pop');
-                void el.offsetWidth; // reflow to restart animation
+                void el.offsetWidth;
                 el.classList.add('pop');
             });
             el.addEventListener('animationend', () => el.classList.remove('pop'));
         });
 
-        // Apply time-of-day theme & update every 30s
-        const theme = applyTheme();
-        currentAccent = theme.acc;
-        setInterval(() => {
-            const th = applyTheme();
-            currentAccent = th.acc;
-        }, 30000);
+        // Apply theme
+        applyTheme();
 
-        // Show countdown instantly (no transition), then enable transitions for updates
-        document.documentElement.style.setProperty('--transition-speed', '0s');
+        // Start countdown immediately, then update every second
         updateCountdown();
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                document.documentElement.style.setProperty('--transition-speed', '0.8s');
-                setInterval(updateCountdown, 1000);
-            });
-        });
+        setInterval(updateCountdown, 1000);
 
         // =====================================================
         //  CONTACT FORM
