@@ -831,9 +831,8 @@
 
             function setGroup(slots, str) {
                 for (let i = 0; i < slots.length; i++) {
-                    const isLeadingZero = str[i] === '0' && i < slots.length - 1 && str.slice(0, i + 1) === '0'.repeat(i + 1);
-                    slots[i].el.style.display = isLeadingZero ? 'none' : '';
-                    if (!isLeadingZero) updateDigit(slots[i], str[i]);
+                    slots[i].el.style.display = '';
+                    updateDigit(slots[i], str[i]);
                 }
             }
 
@@ -859,7 +858,7 @@
             const title = document.getElementById('title');
             const card = document.querySelector('.contact-card');
             if (title && card) {
-                card.style.setProperty('--card-width', title.offsetWidth + 'px');
+                card.style.setProperty('--card-width', title.offsetWidth + 35 + 'px');
             }
         }
         syncCardWidth();
