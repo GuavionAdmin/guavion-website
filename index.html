@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -973,3 +974,253 @@
 </body>
 
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guavion — AI-Orchestrated Workflows for Technical Teams</title>
+  <meta name="description" content="Guavion turns complex, multi-step work into repeatable end-to-end workflows with audited execution, guardrails, and full provenance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap header__inner">
+      <a href="#" class="header__logo">Guavion</a>
+      <nav class="header__nav">
+        <a href="#platform">Platform</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#why">Why Guavion</a>
+        <a href="#demo">Demo</a>
+      </nav>
+      <a href="#waitlist" class="btn btn--sm">Join waitlist</a>
+      <button class="header__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ======= HERO ======= -->
+    <section class="hero">
+      <div class="wrap">
+        <span class="badge">AI-orchestrated workflow platform</span>
+        <h1 class="hero__title">Workflows for<br><span class="hero__accent">technical teams.</span></h1>
+        <p class="hero__lead">Turn complex, multi-step work into repeatable end-to-end workflows. State intent in plain language, review a proposed plan, execute through audited tools, and get decision-ready results with complete provenance.</p>
+        <div class="hero__cta">
+          <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Try live demo</a>
+          <a href="https://www.youtube.com/watch?v=YaDyhtO_sAQ" class="btn btn--outline" target="_blank" rel="noopener">Watch video</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= TRUST ======= -->
+    <section class="trust">
+      <div class="wrap">
+        <div class="trust__grid">
+          <div class="trust__item"><strong>Audited execution</strong><span>Every tool call is governed and logged</span></div>
+          <div class="trust__item"><strong>Full provenance</strong><span>Inputs → transforms → outputs, all linked</span></div>
+          <div class="trust__item"><strong>Reusable templates</strong><span>Best practices encoded, not tribal knowledge</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= INTEGRATE ======= -->
+    <section class="section" id="integrate">
+      <div class="wrap">
+        <h2 class="section__title">State intent, get a plan</h2>
+        <p class="section__sub">Describe what you want in plain language. Guavion proposes a workflow with validation and cost preview before a single job runs.</p>
+        <div class="code-block">
+          <div class="code-block__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="code-block__name">workflow.guavion</span></div>
+          <pre class="code-block__body"><code><span class="c-comment"># User intent</span>
+"Geometry optimize, then compute energies and dipoles for this series."
+
+<span class="c-comment"># Guavion proposes</span>
+<span class="c-key">plan</span>:    [ingest, validate, geom_opt, single_point, aggregate]
+<span class="c-key">compute</span>: local → HPC (heavy) → cloud (GPU)
+<span class="c-key">output</span>:  table + plots + decision summary
+<span class="c-key">status</span>:  <span class="c-val">ready</span> | <span class="c-val">running</span> | <span class="c-val">complete</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= PROBLEM ======= -->
+    <section class="section section--alt" id="problem">
+      <div class="wrap">
+        <h2 class="section__title">The problem</h2>
+        <p class="section__sub">High-value work is still procedural. Teams translate goals into sequences spanning multiple software products, scripts, and approvals.</p>
+        <div class="card-grid card-grid--2">
+          <div class="card"><strong>Fragmented tooling</strong><p>Workflows live as tacit knowledge. Personnel changes break the process.</p></div>
+          <div class="card"><strong>Slow translation of intent</strong><p>Manual steps cause delays and silent errors.</p></div>
+          <div class="card"><strong>No standardization</strong><p>No unified library of approved workflows—only ad hoc scripts.</p></div>
+          <div class="card"><strong>Weak auditability</strong><p>Parameter choices are not recorded; teams can't reproduce outcomes.</p></div>
+          <div class="card"><strong>Reporting as a tax</strong><p>Collecting outputs, comparisons, and reports is repeated from scratch.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= PLATFORM ======= -->
+    <section class="section" id="platform">
+      <div class="wrap">
+        <h2 class="section__title">The Guavion platform</h2>
+        <p class="section__sub">Five core components that replace the brittle glue layer.</p>
+        <div class="card-grid card-grid--3">
+          <div class="card"><h3>Shared workbench</h3><p>Projects, artifacts, collaboration, and visual interaction in a cloud-backed workspace.</p></div>
+          <div class="card"><h3>AI agent</h3><p>Plans, validates, previews cost, executes via audited tools, and explains tradeoffs.</p></div>
+          <div class="card"><h3>Templates &amp; guardrails</h3><p>Validated defaults, safety checks, cost ceilings, approval steps, and versioning.</p></div>
+          <div class="card"><h3>Orchestration</h3><p>Local, HPC, cloud, and enterprise connectors with step-level observability.</p></div>
+          <div class="card"><h3>Provenance &amp; outputs</h3><p>Every run linked end-to-end. Search, compare, and auto-generate reports.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= HOW IT WORKS ======= -->
+    <section class="section section--alt" id="how">
+      <div class="wrap">
+        <h2 class="section__title">How it works</h2>
+        <div class="steps">
+          <div class="step"><span class="step__n">1</span><div><strong>Intent</strong><p>"Do X, using Y constraints, compare to Z."</p></div></div>
+          <div class="step"><span class="step__n">2</span><div><strong>Plan</strong><p>Guavion proposes steps, tools, resources, outputs.</p></div></div>
+          <div class="step"><span class="step__n">3</span><div><strong>Validate</strong><p>Missing inputs, policy constraints, cost preview.</p></div></div>
+          <div class="step"><span class="step__n">4</span><div><strong>Approve</strong><p>User or org approves (optionally step-gated).</p></div></div>
+          <div class="step"><span class="step__n">5</span><div><strong>Execute</strong><p>Dispatched to local / HPC / cloud / systems.</p></div></div>
+          <div class="step"><span class="step__n">6</span><div><strong>Monitor</strong><p>Real-time status, failure detection, fixes.</p></div></div>
+          <div class="step"><span class="step__n">7</span><div><strong>Output</strong><p>Tables, visualizations, reports.</p></div></div>
+          <div class="step"><span class="step__n">8</span><div><strong>Provenance</strong><p>Everything logged, searchable, reusable.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= USE CASES ======= -->
+    <section class="section" id="use-cases">
+      <div class="wrap">
+        <h2 class="section__title">One platform, many domains</h2>
+        <p class="section__sub">Same orchestration backbone. Different verticals via templates and connectors.</p>
+        <div class="card-grid card-grid--2">
+          <div class="card card--accent">
+            <h3>Chemistry &amp; materials</h3>
+            <p class="card__who">Computational chemists, materials modelers, drug discovery.</p>
+            <p>Ingest structures (PubChem/PDB), validated protocols, HPC/cloud execution, batch comparisons, reusable team templates. <a href="https://chopchopmol.com/" target="_blank" rel="noopener">Live demo →</a></p>
+          </div>
+          <div class="card">
+            <h3>Banking &amp; finance</h3>
+            <p class="card__who">Risk, quants, portfolio managers, underwriting.</p>
+            <p>Validated templates for scenario construction, attribution (VaR/ES, P&amp;L), full audit trail, board-ready reports.</p>
+          </div>
+          <div class="card">
+            <h3>Real estate</h3>
+            <p class="card__who">Acquisitions, asset management, lenders.</p>
+            <p>Document extraction, underwriting templates (NOI, DSCR), scenario analysis, risk flags, assumption provenance.</p>
+          </div>
+          <div class="card">
+            <h3>Engineering &amp; simulation</h3>
+            <p class="card__who">Mechanical, aerospace, civil, product.</p>
+            <p>Parameter sweeps, simulation batches, Pareto fronts, constraint reports, reusable playbooks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= WHY ======= -->
+    <section class="section section--alt" id="why">
+      <div class="wrap">
+        <h2 class="section__title">Why Guavion is defensible</h2>
+        <p class="section__sub">The moat is not chat. It is the combination of:</p>
+        <div class="card-grid card-grid--3">
+          <div class="card"><strong>Workflow templates</strong><p>Best practices encoded, not tribal.</p></div>
+          <div class="card"><strong>Audited execution</strong><p>Tool-calling, not ad hoc scripts.</p></div>
+          <div class="card"><strong>Cross-environment orchestration</strong><p>Consistent semantics everywhere.</p></div>
+          <div class="card"><strong>Provenance graph</strong><p>Institutional memory that grows with use.</p></div>
+          <div class="card"><strong>Reusable reporting</strong><p>Tied to history and governance.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= DEMO ======= -->
+    <section class="section" id="demo">
+      <div class="wrap">
+        <h2 class="section__title">See it in action</h2>
+        <p class="section__sub">Our flagship molecular simulation demo: ~500K atom visualization, PubChem/PDB retrieval, ML potentials, and an AI agent running multi-step tasks.</p>
+        <div class="hero__cta">
+          <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Open live demo →</a>
+          <a href="https://www.youtube.com/watch?v=YaDyhtO_sAQ" class="btn btn--outline" target="_blank" rel="noopener">Watch intro video</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= WAITLIST ======= -->
+    <section class="section section--alt" id="waitlist">
+      <div class="wrap">
+        <h2 class="section__title">Join the waitlist</h2>
+        <p class="section__sub">Get early access and updates. No spam.</p>
+        <form id="waitlist-form" class="form">
+          <label class="form__label">Full name <span class="req">*</span></label>
+          <input type="text" name="name" class="form__input" placeholder="Your name" required autocomplete="name" />
+          <label class="form__label">Work email <span class="req">*</span></label>
+          <input type="email" name="email" class="form__input" placeholder="you@company.com" required autocomplete="email" />
+          <label class="form__label">Company</label>
+          <input type="text" name="company" class="form__input" placeholder="Acme Inc." autocomplete="organization" />
+          <label class="form__label">Role</label>
+          <input type="text" name="role" class="form__input" placeholder="e.g. Research Scientist, PM" />
+          <label class="form__label">Area of interest</label>
+          <select name="interest" class="form__input form__select">
+            <option value="">Select one…</option>
+            <option value="chemistry">Chemistry &amp; materials</option>
+            <option value="finance">Banking &amp; finance</option>
+            <option value="real-estate">Real estate</option>
+            <option value="engineering">Engineering &amp; simulation</option>
+            <option value="other">Other</option>
+          </select>
+          <label class="form__label">Tell us about your use case</label>
+          <textarea name="message" class="form__input form__textarea" placeholder="What workflows are you trying to solve?" rows="4"></textarea>
+          <button type="submit" class="btn form__submit">Join waitlist</button>
+        </form>
+        <p id="waitlist-message" class="form__msg" hidden></p>
+      </div>
+    </section>
+
+    <!-- ======= CTA ======= -->
+    <section class="cta">
+      <div class="wrap">
+        <h2 class="cta__title">Workflows reimagined.<br>Available today.</h2>
+        <div class="hero__cta">
+          <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Get started</a>
+          <a href="#waitlist" class="btn btn--outline">Join waitlist</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= ROADMAP ======= -->
+    <section class="section section--alt">
+      <div class="wrap">
+        <h2 class="section__title">Product milestones</h2>
+        <div class="card-grid card-grid--3">
+          <div class="card"><h3>Phase 1</h3><p>Months 0–6. V1 platform, validated chemistry templates, HPC/cloud execution, AI assistant with cost previews.</p></div>
+          <div class="card"><h3>Phase 2</h3><p>Months 6–12. Multi-backend, team features, second vertical pilot, cross-run reporting.</p></div>
+          <div class="card"><h3>Phase 3</h3><p>Months 12–24. Enterprise (RBAC, SSO, audit), scalable onboarding, paid customers, Seed traction.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p class="footer__brand">Guavion</p>
+      <p class="footer__tagline">AI-orchestrated workflows for technical teams.</p>
+      <nav class="footer__nav">
+        <a href="#platform">Platform</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#demo">Demo</a>
+        <a href="#waitlist">Waitlist</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
+>>>>>>> e9dbeef (Initial commit)
