@@ -61,11 +61,17 @@ a:hover { text-decoration: underline; }
 }
 
 .header__logo {
-  font: 700 1.25rem var(--mono);
-  color: var(--text);
   margin-right: auto;
+  display: flex;
+  align-items: center;
 }
-.header__logo:hover { color: var(--accent); text-decoration: none; }
+.header__logo:hover { text-decoration: none; opacity: 0.9; }
+.header__logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
 
 .header__nav { display: flex; gap: 24px; }
 .header__nav a {
@@ -331,8 +337,14 @@ a:hover { text-decoration: underline; }
   align-items: center; gap: 8px;
 }
 .footer__brand {
-  font: 700 1.1rem var(--mono);
-  margin: 0; color: var(--text);
+  margin: 0;
+}
+.footer__logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  margin: 0 auto;
 }
 .footer__tagline {
   font-size: .95rem; color: var(--dim); margin: 0 0 12px;
