@@ -64,14 +64,16 @@ a:hover { text-decoration: underline; }
   margin-right: auto;
   display: flex;
   align-items: center;
+  padding: 6px 12px;
+  background: #fff;
+  border-radius: var(--radius-sm);
 }
-.header__logo:hover { text-decoration: none; opacity: 0.9; }
+.header__logo:hover { text-decoration: none; opacity: 0.92; }
 .header__logo-img {
-  height: 36px;
+  height: 32px;
   width: auto;
   display: block;
   object-fit: contain;
-  filter: brightness(2.2) contrast(1.1);
 }
 
 .header__nav { display: flex; gap: 24px; }
@@ -339,14 +341,17 @@ a:hover { text-decoration: underline; }
 }
 .footer__brand {
   margin: 0;
+  padding: 8px 14px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  display: inline-block;
 }
 .footer__logo-img {
-  height: 32px;
+  height: 28px;
   width: auto;
   display: block;
   object-fit: contain;
   margin: 0 auto;
-  filter: brightness(2.2) contrast(1.1);
 }
 .footer__tagline {
   font-size: .95rem; color: var(--dim); margin: 0 0 12px;
