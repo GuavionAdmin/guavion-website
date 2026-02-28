@@ -71,6 +71,7 @@ a:hover { text-decoration: underline; }
   width: auto;
   display: block;
   object-fit: contain;
+  filter: brightness(2.2) contrast(1.1);
 }
 
 .header__nav { display: flex; gap: 24px; }
@@ -345,6 +346,7 @@ a:hover { text-decoration: underline; }
   display: block;
   object-fit: contain;
   margin: 0 auto;
+  filter: brightness(2.2) contrast(1.1);
 }
 .footer__tagline {
   font-size: .95rem; color: var(--dim); margin: 0 0 12px;
