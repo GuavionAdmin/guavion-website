@@ -1,33 +1,50 @@
 # Guavion Website
 
-Landing site for Guavion — AI-orchestrated workflows for technical teams. Built with Vite.
+AI-orchestrated workflow platform landing page. Built with Vite, plain HTML/CSS/JS.
 
-## Setup
+## Where is the code?
+
+- **This folder** — Open `Guavion Website` in Cursor or VS Code. All source files are here.
+- **GitHub** — After pushing, clone from:  
+  `git clone https://github.com/GuavionAdmin/GuavionWebsite.git`
+
+## Project structure
+
+```
+Guavion Website/
+├── index.html      # Main HTML
+├── package.json    # Dependencies (Vite)
+├── vite.config.js # Vite config
+├── src/
+│   ├── main.js     # Entry + nav + waitlist form
+│   └── style.css   # All styles
+└── README.md       # This file
+```
+
+## Run locally
 
 ```bash
 npm install
-```
-
-## Develop
-
-```bash
 npm run dev
 ```
 
-Opens at `http://localhost:5173` with hot module replacement (HMR).
+Then open http://localhost:5173
 
-## Build
+## Build for production
 
 ```bash
 npm run build
 ```
 
-Output goes to `dist/`. Deploy that folder to any static host.
+Output is in `dist/`.
 
-## Preview production build
+## Push to GitHub (if you need to restore elsewhere)
 
 ```bash
-npm run preview
+git remote set-url origin https://github.com/GuavionAdmin/GuavionWebsite.git
+git add -A
+git commit -m "Update site"
+git push -u origin main
 ```
 
-Serves the `dist/` build locally.
+Then on another machine: `git clone https://github.com/GuavionAdmin/GuavionWebsite.git`
