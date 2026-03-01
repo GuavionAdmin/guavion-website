@@ -38,6 +38,23 @@ npm run build
 
 Output is in `dist/`.
 
+## Waitlist → Railway backend
+
+The waitlist form POSTs to your backend when `VITE_API_URL` is set.
+
+1. **Set the API URL** when building (e.g. your Railway backend):
+   ```bash
+   VITE_API_URL=https://your-app.up.railway.app npm run build
+   ```
+   Or in your host’s env (Vercel, Netlify, etc.) set `VITE_API_URL` to your Railway backend URL.
+
+2. **Backend contract:** Your Railway backend should expose:
+   - **POST** `/api/waitlist`
+   - **Body (JSON):** `{ name, email, company?, role?, interest?, message? }`
+   - **Response:** 2xx on success (e.g. 200 or 201). Store the payload in Postgres and return any JSON.
+
+If `VITE_API_URL` is not set, the form still works but only shows “Thanks!” and does not send data anywhere.
+
 ## Push to GitHub (if you need to restore elsewhere)
 
 ```bash
