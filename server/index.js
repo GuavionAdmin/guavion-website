@@ -11,6 +11,24 @@ const pool = new Pool({
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 })
 
+async function initDB() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS waitlist (
+      id         SERIAL PRIMARY KEY,
+      name       TEXT NOT NULL,
+      email      TEXT NOT NULL,
+      company    TEXT,
+      role       TEXT,
+      interest   TEXT,
+      message    TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `)
+  console.log('DB ready: waitlist table ensured')
+}
+
+initDB().catch(e => console.error('DB init failed:', e))
+
 app.use(cors())
 app.use(express.json())
 
