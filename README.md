@@ -1,6 +1,6 @@
 # Guavion Website
 
-AI-orchestrated workflow platform landing page. Built with Vite, plain HTML/CSS/JS.
+An application-agnostic AI-orchestrated workflow platform landing page. Built with Vite, plain HTML/CSS/JS.
 
 ## Where is the code?
 
