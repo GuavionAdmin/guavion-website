@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guavion — AI-Orchestrated Workflows for Technical Teams</title>
-  <meta name="description" content="Guavion turns complex, multi-step work into repeatable end-to-end workflows with audited execution, guardrails, and full provenance." />
+  <title>Guavion — The Governed Execution System for AI Era Workflows</title>
+  <meta name="description" content="Guavion is the platform that turns user intent into reliable, auditable, and reproducible work. Unifying workspace, AI, containerized software, dynamic code generation, cloud/HPC infrastructure, and audit in one system." />
   <link rel="icon" type="image/png" href="/GuavionIcon.png" />
   <link rel="apple-touch-icon" href="/GuavionIcon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,7 +20,7 @@
       </a>
       <nav class="header__nav">
         <a href="#platform">Platform</a>
-        <a href="#use-cases">Use Cases</a>
+        <a href="#traction">Traction</a>
         <a href="#why">Why Guavion</a>
         <a href="#demo">Demo</a>
       </nav>
@@ -34,9 +34,9 @@
     <!-- ======= HERO ======= -->
     <section class="hero">
       <div class="wrap">
-        <span class="badge">An Application-Agnostic AI-Orchestrated Workflow Platform</span>
-        <h1 class="hero__title">Workflows for<br><span class="hero__accent">technical teams.</span></h1>
-        <p class="hero__lead">Turn complex, multi-step work into repeatable end-to-end workflows. State intent in plain language, review a proposed plan, execute through audited tools, and get decision-ready results with complete provenance.</p>
+        <span class="badge">The Governed Execution System for AI Era Workflows</span>
+        <h1 class="hero__title">From intent to<br><span class="hero__accent">governed execution.</span></h1>
+        <p class="hero__lead">Guavion turns user intent into reliable, auditable, and reproducible work. Instead of piecing together software, scripts, and infrastructure, unify the entire execution stack in a single platform that structures, executes, governs, and learns from every workflow.</p>
         <div class="hero__cta">
           <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Try live demo</a>
           <a href="https://www.youtube.com/watch?v=YaDyhtO_sAQ" class="btn btn--outline" target="_blank" rel="noopener">Watch video</a>
@@ -48,28 +48,9 @@
     <section class="trust">
       <div class="wrap">
         <div class="trust__grid">
-          <div class="trust__item"><strong>Audited execution</strong><span>Every tool call is governed and logged</span></div>
-          <div class="trust__item"><strong>Full provenance</strong><span>Inputs → transforms → outputs, all linked</span></div>
-          <div class="trust__item"><strong>Reusable templates</strong><span>Best practices encoded, not tribal knowledge</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= INTEGRATE ======= -->
-    <section class="section" id="integrate">
-      <div class="wrap">
-        <h2 class="section__title">State intent, get a plan</h2>
-        <p class="section__sub">Describe what you want in plain language. Guavion proposes a workflow with validation and cost preview before a single job runs.</p>
-        <div class="code-block">
-          <div class="code-block__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="code-block__name">workflow.guavion</span></div>
-          <pre class="code-block__body"><code><span class="c-comment"># User intent</span>
-"Geometry optimize, then compute energies and dipoles for this series."
-
-<span class="c-comment"># Guavion proposes</span>
-<span class="c-key">plan</span>:    [ingest, validate, geom_opt, single_point, aggregate]
-<span class="c-key">compute</span>: local → HPC (heavy) → cloud (GPU)
-<span class="c-key">output</span>:  table + plots + decision summary
-<span class="c-key">status</span>:  <span class="c-val">ready</span> | <span class="c-val">running</span> | <span class="c-val">complete</span></code></pre>
+          <div class="trust__item"><strong>Governed execution</strong><span>Every workflow validated, audited, and traceable</span></div>
+          <div class="trust__item"><strong>Full reproducibility</strong><span>Inputs, decisions, tools, code, and outcomes linked</span></div>
+          <div class="trust__item"><strong>Continuous learning</strong><span>User expertise absorbed into the platform over time</span></div>
         </div>
       </div>
     </section>
@@ -77,91 +58,237 @@
     <!-- ======= PROBLEM ======= -->
     <section class="section section--alt" id="problem">
       <div class="wrap">
-        <h2 class="section__title">The problem</h2>
-        <p class="section__sub">High-value work is still procedural. Teams translate goals into sequences spanning multiple software products, scripts, and approvals.</p>
-        <div class="card-grid card-grid--2">
-          <div class="card"><strong>Fragmented tooling</strong><p>Workflows live as tacit knowledge. Personnel changes break the process.</p></div>
-          <div class="card"><strong>Slow translation of intent</strong><p>Manual steps cause delays and silent errors.</p></div>
-          <div class="card"><strong>No standardization</strong><p>No unified library of approved workflows—only ad hoc scripts.</p></div>
-          <div class="card"><strong>Weak auditability</strong><p>Parameter choices are not recorded; teams can't reproduce outcomes.</p></div>
-          <div class="card"><strong>Reporting as a tax</strong><p>Collecting outputs, comparisons, and reports is repeated from scratch.</p></div>
+        <div class="reveal">
+          <span class="section__label">The problem</span>
+          <h2 class="section__title">Teams spend 30–60% of their time on workflow overhead</h2>
+          <p class="section__sub">Across science, finance, and enterprise environments, time is lost to fragmented tools, brittle scripts, manual configuration, and processes that are impossible to reproduce or audit.</p>
+        </div>
+        <div class="card-grid card-grid--2 reveal">
+          <div class="card"><strong>Fragmented tools &amp; brittle scripts</strong><p>Manual configuration, dependency management, and processes that break when people or tools change.</p></div>
+          <div class="card"><strong>Generation ≠ execution</strong><p>AI copilots generate answers and code—but generation alone doesn't solve execution. Workflows must be validated, governed, and made traceable.</p></div>
+          <div class="card"><strong>No unified infrastructure</strong><p>The end-to-end execution infrastructure from intent to governed outcome does not exist in a unified form today.</p></div>
+          <div class="card"><strong>Reproducibility is structural</strong><p>In regulated industries, governed and reproducible execution is not a nice-to-have. It's a requirement.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= SOLUTION ======= -->
+    <section class="section" id="solution">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="section__label">The solution</span>
+          <h2 class="section__title">Unify the full path from intent to execution</h2>
+          <p class="section__sub">A closed-loop system that doesn't just assist with work—it structures it, executes it, governs it, and learns from it.</p>
+        </div>
+        <div class="code-block reveal">
+          <div class="code-block__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="code-block__name">workflow.guavion</span></div>
+          <pre class="code-block__body"><code><span class="c-comment"># User intent</span>
+"Optimize geometry, compute energies and dipoles for this molecular series."
+
+<span class="c-comment"># Guavion orchestrates the full stack</span>
+<span class="c-key">workspace</span>:   create → review → monitor → manage
+<span class="c-key">ai_layer</span>:    interpret intent → break into steps → recommend methods
+<span class="c-key">containers</span>: portable, reproducible software environments
+<span class="c-key">code_gen</span>:   dynamic scripts tailored to this specific problem
+<span class="c-key">compute</span>:    local → HPC → cloud (optimal for scale, cost, performance)
+<span class="c-key">audit</span>:      <span class="c-val">recorded</span> | <span class="c-val">reproducible</span> | <span class="c-val">improvable</span></code></pre>
         </div>
       </div>
     </section>
 
     <!-- ======= PLATFORM ======= -->
-    <section class="section" id="platform">
+    <section class="section section--alt" id="platform">
       <div class="wrap">
-        <h2 class="section__title">The Guavion platform</h2>
-        <p class="section__sub">Five core components that replace the brittle glue layer.</p>
-        <div class="card-grid card-grid--3">
-          <div class="card"><h3>Shared workbench</h3><p>Projects, artifacts, collaboration, and visual interaction in a cloud-backed workspace.</p></div>
-          <div class="card"><h3>AI agent</h3><p>Plans, validates, previews cost, executes via audited tools, and explains tradeoffs.</p></div>
-          <div class="card"><h3>Templates &amp; guardrails</h3><p>Validated defaults, safety checks, cost ceilings, approval steps, and versioning.</p></div>
-          <div class="card"><h3>Orchestration</h3><p>Local, HPC, cloud, and enterprise connectors with step-level observability.</p></div>
-          <div class="card"><h3>Provenance &amp; outputs</h3><p>Every run linked end-to-end. Search, compare, and auto-generate reports.</p></div>
+        <div class="reveal">
+          <span class="section__label">Platform</span>
+          <h2 class="section__title">Six integrated layers</h2>
+          <p class="section__sub">Each layer builds on the last—from workspace to intelligence to execution to memory.</p>
         </div>
+        <div class="card-grid card-grid--3 reveal">
+          <div class="card">
+            <h3>1. Workspace</h3>
+            <p>The operational environment. Create, review, edit, monitor, and manage workflows in one place.</p>
+          </div>
+          <div class="card">
+            <h3>2. AI layer</h3>
+            <p>Interprets intent, breaks work into actionable steps, recommends methods, and governs execution as tasks unfold.</p>
+          </div>
+          <div class="card">
+            <h3>3. Containerized software</h3>
+            <p>Permissive and non-permissive software made portable, reproducible, and easy to deploy without dependency burden.</p>
+          </div>
+          <div class="card">
+            <h3>4. Code generation</h3>
+            <p>Execution logic tailored to the specific problem, workflow, and context—not static templates.</p>
+          </div>
+          <div class="card">
+            <h3>5. Compute orchestration</h3>
+            <p>Select optimal cloud and HPC resources for the scale, cost, and performance requirements of each job.</p>
+          </div>
+          <div class="card">
+            <h3>6. Audit &amp; learning</h3>
+            <p>Record every decision, tool, code artifact, and outcome. Reproducible, defensible, and continuously improvable.</p>
+          </div>
+        </div>
+        <p class="section__outro reveal">User expertise and intelligence are absorbed into the workspace over time—execution gets better the more you use it.</p>
       </div>
     </section>
 
     <!-- ======= HOW IT WORKS ======= -->
-    <section class="section section--alt" id="how">
+    <section class="section" id="how">
       <div class="wrap">
-        <h2 class="section__title">How it works</h2>
-        <div class="steps">
-          <div class="step"><span class="step__n">1</span><div><strong>Intent</strong><p>"Do X, using Y constraints, compare to Z."</p></div></div>
-          <div class="step"><span class="step__n">2</span><div><strong>Plan</strong><p>Guavion proposes steps, tools, resources, outputs.</p></div></div>
-          <div class="step"><span class="step__n">3</span><div><strong>Validate</strong><p>Missing inputs, policy constraints, cost preview.</p></div></div>
-          <div class="step"><span class="step__n">4</span><div><strong>Approve</strong><p>User or org approves (optionally step-gated).</p></div></div>
-          <div class="step"><span class="step__n">5</span><div><strong>Execute</strong><p>Dispatched to local / HPC / cloud / systems.</p></div></div>
-          <div class="step"><span class="step__n">6</span><div><strong>Monitor</strong><p>Real-time status, failure detection, fixes.</p></div></div>
-          <div class="step"><span class="step__n">7</span><div><strong>Output</strong><p>Tables, visualizations, reports.</p></div></div>
-          <div class="step"><span class="step__n">8</span><div><strong>Provenance</strong><p>Everything logged, searchable, reusable.</p></div></div>
+        <div class="reveal">
+          <span class="section__label">How it works</span>
+          <h2 class="section__title">From intent to governed outcome in eight steps</h2>
+        </div>
+        <div class="steps reveal">
+          <div class="step"><span class="step__n">1</span><div><strong>State intent</strong><p>Describe your goal in plain language.</p></div></div>
+          <div class="step"><span class="step__n">2</span><div><strong>AI plans</strong><p>Break work into steps, recommend methods.</p></div></div>
+          <div class="step"><span class="step__n">3</span><div><strong>Validate</strong><p>Check inputs, policies, cost, and risks.</p></div></div>
+          <div class="step"><span class="step__n">4</span><div><strong>Generate code</strong><p>Create execution logic for your context.</p></div></div>
+          <div class="step"><span class="step__n">5</span><div><strong>Execute</strong><p>Run on optimal compute: local, HPC, or cloud.</p></div></div>
+          <div class="step"><span class="step__n">6</span><div><strong>Govern</strong><p>Real-time monitoring, guardrails, failure recovery.</p></div></div>
+          <div class="step"><span class="step__n">7</span><div><strong>Output</strong><p>Decision-ready results, visualizations, reports.</p></div></div>
+          <div class="step"><span class="step__n">8</span><div><strong>Learn</strong><p>Full audit trail; platform improves over time.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= TRACTION ======= -->
+    <section class="section section--alt" id="traction">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="section__label">Traction</span>
+          <h2 class="section__title">Proven at production scale</h2>
+          <p class="section__sub">We begin in science, where complexity, compute intensity, and reproducibility are critical.</p>
+        </div>
+        <div class="card-grid card-grid--3 reveal">
+          <div class="card card--accent">
+            <h3>~500K atoms</h3>
+            <p>Production-scale AI-driven multi-step execution validated on molecular systems across HPC and cloud.</p>
+          </div>
+          <div class="card">
+            <h3>2–5× faster</h3>
+            <p>Reduction in workflow setup time with measurable error reduction via automated validation and guardrails.</p>
+          </div>
+          <div class="card">
+            <h3>Design partners</h3>
+            <p>Flagship chemistry workflows complete. Partner agreements in final stages across chemistry and a second vertical.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= WHY GUAVION WINS ======= -->
+    <section class="section" id="why">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="section__label">Competitive position</span>
+          <h2 class="section__title">Why Guavion wins</h2>
+          <p class="section__sub">We own the full path from intent to governed execution. Every workflow run strengthens the platform.</p>
+        </div>
+        <div class="card-grid card-grid--3 reveal">
+          <div class="card">
+            <h3>vs. Big Tech</h3>
+            <p class="card__who">Microsoft, AWS, Google</p>
+            <p>General-purpose horizontal APIs. They don't own the validated workflow layer: domain templates, compliance guardrails, institutional memory. Depth beats breadth.</p>
+          </div>
+          <div class="card">
+            <h3>vs. Vertical tools</h3>
+            <p class="card__who">Schrödinger, Benchling</p>
+            <p>Domain-locked. Guavion is the orchestration layer above them and can orchestrate their outputs.</p>
+          </div>
+          <div class="card">
+            <h3>vs. RPA &amp; open source</h3>
+            <p class="card__who">UiPath, Nextflow</p>
+            <p>Rule-based and static. Guavion adapts dynamically and governs execution in ways pipelines cannot.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= WHY NOW ======= -->
+    <section class="section section--alt" id="why-now">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="section__label">Timing</span>
+          <h2 class="section__title">Why now</h2>
+          <p class="section__sub">Three shifts make this the right moment.</p>
+        </div>
+        <div class="card-grid card-grid--3 reveal">
+          <div class="card">
+            <h3>AI can reason</h3>
+            <p>AI agents reason across multi-step tasks but still lack enterprise-grade execution infrastructure.</p>
+          </div>
+          <div class="card">
+            <h3>Compute is fragmenting</h3>
+            <p>Cloud, HPC, and emerging architectures increase the need for a unifying orchestration layer.</p>
+          </div>
+          <div class="card">
+            <h3>Regulation is rising</h3>
+            <p>Regulated industries are raising the bar on reproducibility, traceability, and auditability.</p>
+          </div>
+        </div>
+        <p class="section__outro reveal">As AI moves closer to real operational work, the system that governs execution becomes just as important as the intelligence itself.</p>
+      </div>
+    </section>
+
+    <!-- ======= TEAM ======= -->
+    <section class="section" id="team">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="section__label">Team</span>
+          <h2 class="section__title">Built by people who lived the problem</h2>
+        </div>
+        <div class="card-grid card-grid--3 reveal">
+          <div class="card">
+            <h3>Sanjay Vishwakarma</h3>
+            <p class="card__who">CEO</p>
+            <p>Ex-IBM Quantum, PsiQuantum. Led enterprise platform initiatives across AI, distributed systems, and HPC.</p>
+          </div>
+          <div class="card">
+            <h3>Trang Nguyen, PhD</h3>
+            <p class="card__who">CTO</p>
+            <p>Built end-to-end molecular workflows at scale. Domain depth and systems thinking in one rare combination.</p>
+          </div>
+          <div class="card">
+            <h3>Etinosa Osaro, PhD</h3>
+            <p class="card__who">CPO</p>
+            <p>Full-stack systems infrastructure. HPC, Cloud, and AI deep expertise. Experience founding companies.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ======= USE CASES ======= -->
-    <section class="section" id="use-cases">
+    <section class="section section--alt" id="use-cases">
       <div class="wrap">
-        <h2 class="section__title">One platform, many domains</h2>
-        <p class="section__sub">Same orchestration backbone. Different verticals via templates and connectors.</p>
-        <div class="card-grid card-grid--2">
+        <div class="reveal">
+          <span class="section__label">Domains</span>
+          <h2 class="section__title">One platform, many domains</h2>
+          <p class="section__sub">Science is the wedge: regulated, compute-intensive workflows demand the highest governance. Proving here earns trust to expand.</p>
+        </div>
+        <div class="card-grid card-grid--2 reveal">
           <div class="card card--accent">
-            <h3>Chemistry &amp; materials</h3>
-            <p class="card__who">Computational chemists, materials modelers, drug discovery.</p>
-            <p>Ingest structures (PubChem/PDB), validated protocols, HPC/cloud execution, batch comparisons, reusable team templates. <a href="https://chopchopmol.com/" target="_blank" rel="noopener">Live demo →</a></p>
+            <h3>Science &amp; chemistry</h3>
+            <p class="card__who">Computational chemists · materials modelers · drug discovery</p>
+            <p>Validated protocols, containerized software, HPC/cloud execution, batch comparisons, reusable templates. <a href="https://chopchopmol.com/" target="_blank" rel="noopener">Live demo →</a></p>
           </div>
           <div class="card">
-            <h3>Banking &amp; finance</h3>
-            <p class="card__who">Risk, quants, portfolio managers, underwriting.</p>
-            <p>Validated templates for scenario construction, attribution (VaR/ES, P&amp;L), full audit trail, board-ready reports.</p>
+            <h3>Finance</h3>
+            <p class="card__who">Risk · quants · portfolio managers · underwriting</p>
+            <p>Scenario construction, attribution (VaR/ES, P&amp;L), full audit trail, board-ready reports.</p>
           </div>
           <div class="card">
-            <h3>Real estate</h3>
-            <p class="card__who">Acquisitions, asset management, lenders.</p>
-            <p>Document extraction, underwriting templates (NOI, DSCR), scenario analysis, risk flags, assumption provenance.</p>
-          </div>
-          <div class="card">
-            <h3>Engineering &amp; simulation</h3>
-            <p class="card__who">Mechanical, aerospace, civil, product.</p>
+            <h3>Simulation &amp; engineering</h3>
+            <p class="card__who">Mechanical · aerospace · civil · product</p>
             <p>Parameter sweeps, simulation batches, Pareto fronts, constraint reports, reusable playbooks.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= WHY ======= -->
-    <section class="section section--alt" id="why">
-      <div class="wrap">
-        <h2 class="section__title">Why Guavion is defensible</h2>
-        <p class="section__sub">The moat is not chat. It is the combination of:</p>
-        <div class="card-grid card-grid--3">
-          <div class="card"><strong>Workflow templates</strong><p>Best practices encoded, not tribal.</p></div>
-          <div class="card"><strong>Audited execution</strong><p>Tool-calling, not ad hoc scripts.</p></div>
-          <div class="card"><strong>Cross-environment orchestration</strong><p>Consistent semantics everywhere.</p></div>
-          <div class="card"><strong>Provenance graph</strong><p>Institutional memory that grows with use.</p></div>
-          <div class="card"><strong>Reusable reporting</strong><p>Tied to history and governance.</p></div>
+          <div class="card">
+            <h3>Enterprise operations</h3>
+            <p class="card__who">Complex multi-system workflows</p>
+            <p>Dynamic code generation, governed execution, audit trails, and continuous improvement.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -169,11 +296,14 @@
     <!-- ======= DEMO ======= -->
     <section class="section" id="demo">
       <div class="wrap">
-        <h2 class="section__title">See it in action</h2>
-        <p class="section__sub">Our flagship molecular simulation demo: ~500K atom visualization, PubChem/PDB retrieval, ML potentials, and an AI agent running multi-step tasks.</p>
-        <div class="hero__cta">
-          <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Open live demo →</a>
-          <a href="https://www.youtube.com/watch?v=YaDyhtO_sAQ" class="btn btn--outline" target="_blank" rel="noopener">Watch intro video</a>
+        <div class="reveal">
+          <span class="section__label">Demo</span>
+          <h2 class="section__title">See it in action</h2>
+          <p class="section__sub">Production-scale prototype: AI-driven multi-step execution on molecular systems up to ~500K atoms across HPC and cloud.</p>
+          <div class="hero__cta">
+            <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Open live demo →</a>
+            <a href="https://www.youtube.com/watch?v=YaDyhtO_sAQ" class="btn btn--outline" target="_blank" rel="noopener">Watch intro video</a>
+          </div>
         </div>
       </div>
     </section>
@@ -181,9 +311,12 @@
     <!-- ======= WAITLIST ======= -->
     <section class="section section--alt" id="waitlist">
       <div class="wrap">
-        <h2 class="section__title">Join the waitlist</h2>
-        <p class="section__sub">Get early access and updates. No spam.</p>
-        <form id="waitlist-form" class="form">
+        <div class="reveal">
+          <span class="section__label">Early access</span>
+          <h2 class="section__title">Join the waitlist</h2>
+          <p class="section__sub">Get early access and updates. No spam.</p>
+        </div>
+        <form id="waitlist-form" class="form reveal">
           <label class="form__label">Full name <span class="req">*</span></label>
           <input type="text" name="name" class="form__input" placeholder="Your name" required autocomplete="name" />
           <label class="form__label">Work email <span class="req">*</span></label>
@@ -195,10 +328,10 @@
           <label class="form__label">Area of interest</label>
           <select name="interest" class="form__input form__select">
             <option value="">Select one…</option>
-            <option value="chemistry">Chemistry &amp; materials</option>
-            <option value="finance">Banking &amp; finance</option>
-            <option value="real-estate">Real estate</option>
-            <option value="engineering">Engineering &amp; simulation</option>
+            <option value="science">Science &amp; chemistry</option>
+            <option value="finance">Finance</option>
+            <option value="engineering">Simulation &amp; engineering</option>
+            <option value="enterprise">Enterprise operations</option>
             <option value="other">Other</option>
           </select>
           <label class="form__label">Tell us about your use case</label>
@@ -212,10 +345,13 @@
     <!-- ======= CTA ======= -->
     <section class="cta">
       <div class="wrap">
-        <h2 class="cta__title">Workflows reimagined.<br>Available today.</h2>
-        <div class="hero__cta">
-          <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Get started</a>
-          <a href="#waitlist" class="btn btn--outline">Join waitlist</a>
+        <div class="reveal">
+          <h2 class="cta__title">The governed workflow<br>operating system for the AI era.</h2>
+          <p class="cta__sub">Where work is designed, directed, executed, scaled, and continuously improved—in one system.</p>
+          <div class="hero__cta">
+            <a href="https://chopchopmol.com/" class="btn" target="_blank" rel="noopener">Get started</a>
+            <a href="#waitlist" class="btn btn--outline">Join waitlist</a>
+          </div>
         </div>
       </div>
     </section>
@@ -227,13 +363,15 @@
       <p class="footer__brand">
         <img src="/GuavionLogoNew.png" alt="Guavion" class="footer__logo-img" />
       </p>
-      <p class="footer__tagline">AI-orchestrated workflows for technical teams.</p>
+      <p class="footer__tagline">The governed execution system for AI era workflows.</p>
       <nav class="footer__nav">
         <a href="#platform">Platform</a>
-        <a href="#use-cases">Use Cases</a>
+        <a href="#traction">Traction</a>
+        <a href="#why">Why Guavion</a>
         <a href="#demo">Demo</a>
         <a href="#waitlist">Waitlist</a>
       </nav>
+      <p class="footer__copy">© Guavion 2026. All rights reserved.</p>
     </div>
   </footer>
 

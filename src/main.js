@@ -1,5 +1,6 @@
 import './style.css'
 
+// Mobile menu
 const toggle = document.querySelector('.header__toggle')
 const nav = document.querySelector('.header__nav')
 
@@ -8,11 +9,50 @@ if (toggle && nav) {
     nav.classList.toggle('open')
     document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : ''
   })
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open')
+      document.body.style.overflow = ''
+    })
+  })
 }
 
-// Backend API URL (set in production via VITE_API_URL, e.g. your Railway backend)
-const API_URL = import.meta.env.VITE_API_URL || ''
+// Scroll reveal with IntersectionObserver
+const reveals = document.querySelectorAll('.reveal')
+if (reveals.length && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80)
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
 
+  reveals.forEach(el => observer.observe(el))
+} else {
+  reveals.forEach(el => el.classList.add('visible'))
+}
+
+// Header shrink on scroll
+const header = document.querySelector('.header')
+if (header) {
+  let ticking = false
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        header.style.borderBottomColor = window.scrollY > 20
+          ? 'rgba(255,255,255,.08)'
+          : 'rgba(255,255,255,.04)'
+        ticking = false
+      })
+      ticking = true
+    }
+  })
+}
+
+// Waitlist form
+const API_URL = import.meta.env.VITE_API_URL || ''
 const form = document.getElementById('waitlist-form')
 const msg = document.getElementById('waitlist-message')
 const submitBtn = form?.querySelector('button[type="submit"]')
@@ -54,7 +94,7 @@ if (form && msg) {
       form.reset()
     } catch (err) {
       msg.hidden = false
-      msg.textContent = 'Something went wrong. Please try again or contact us directly.'
+      msg.textContent = 'Something went wrong. Please try again.'
       msg.className = 'form__msg err'
     } finally {
       if (submitBtn) {
