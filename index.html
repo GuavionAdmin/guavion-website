@@ -13,6 +13,18 @@
 </head>
 <body>
 
+  <!-- ======= STEALTH GATE ======= -->
+  <div id="stealth-gate" class="gate">
+    <div class="gate__inner">
+      <img src="/GuavionLogoNew.png" alt="Guavion" class="gate__logo" />
+      <h2 class="gate__title">This site is in stealth mode</h2>
+      <p class="gate__sub">Enter the access code to continue.</p>
+      <input type="password" id="gate-input" class="gate__input" placeholder="Access code" autocomplete="off" autofocus />
+      <button id="gate-btn" class="btn gate__btn">Enter</button>
+      <p id="gate-error" class="gate__error" hidden>Incorrect code. Try again.</p>
+    </div>
+  </div>
+
   <header class="header">
     <div class="wrap header__inner">
       <a href="#" class="header__logo" aria-label="Guavion home">

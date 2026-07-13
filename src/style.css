@@ -78,6 +78,60 @@ a:hover { color: #fbbf24; }
   transform: translateY(0);
 }
 
+/* ======== STEALTH GATE ======== */
+.gate {
+  position: fixed; inset: 0;
+  z-index: 10000;
+  background: #06080e;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+.gate.hidden { display: none; }
+body.gated { overflow: hidden; }
+body.gated .header,
+body.gated main,
+body.gated .footer { display: none; }
+
+.gate__inner {
+  max-width: 380px; width: 100%;
+}
+.gate__logo {
+  height: 48px; width: auto;
+  margin-bottom: 32px;
+  filter: invert(1) brightness(1.1);
+}
+.gate__title {
+  font-size: 1.5rem; font-weight: 700;
+  margin: 0 0 8px; color: var(--text);
+}
+.gate__sub {
+  font-size: 1rem; color: var(--muted);
+  margin: 0 0 28px;
+}
+.gate__input {
+  width: 100%; padding: 14px 18px;
+  font: 1rem var(--font); color: var(--text);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  margin-bottom: 16px;
+  text-align: center;
+  letter-spacing: .08em;
+  transition: border-color .2s, box-shadow .2s;
+}
+.gate__input::placeholder { color: var(--dim); letter-spacing: .04em; }
+.gate__input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+.gate__btn {
+  width: 100%; border-radius: 999px;
+}
+.gate__error {
+  margin: 16px 0 0;
+  font-size: .9rem; color: #ff5f57;
+}
+
 /* ======== HEADER ======== */
 .header {
   position: fixed; inset: 0 0 auto;

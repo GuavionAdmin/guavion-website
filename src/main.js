@@ -1,5 +1,38 @@
 import './style.css'
 
+// Stealth gate
+const ACCESS_CODE = 'Guavion-0987'
+const gate = document.getElementById('stealth-gate')
+const gateInput = document.getElementById('gate-input')
+const gateBtn = document.getElementById('gate-btn')
+const gateError = document.getElementById('gate-error')
+
+function unlockSite() {
+  gate?.classList.add('hidden')
+  document.body.classList.remove('gated')
+  sessionStorage.setItem('guavion_access', '1')
+}
+
+if (sessionStorage.getItem('guavion_access') === '1') {
+  unlockSite()
+} else {
+  document.body.classList.add('gated')
+}
+
+function tryAccess() {
+  if (gateInput?.value === ACCESS_CODE) {
+    unlockSite()
+  } else {
+    if (gateError) { gateError.hidden = false }
+    gateInput?.focus()
+  }
+}
+
+gateBtn?.addEventListener('click', tryAccess)
+gateInput?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') tryAccess()
+})
+
 // Mobile menu
 const toggle = document.querySelector('.header__toggle')
 const nav = document.querySelector('.header__nav')
