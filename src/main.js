@@ -1,4 +1,12 @@
 import './style.css'
+import { initHeroScene, initGateScene, initCtaScene } from './three-bg.js'
+
+// Three.js scenes
+let gateScene = null
+let heroScene = null
+let ctaScene = null
+
+gateScene = initGateScene(document.getElementById('gate-canvas'))
 
 // Stealth gate
 const ACCESS_CODE = 'Guavion-0987'
@@ -11,6 +19,9 @@ function unlockSite() {
   gate?.classList.add('hidden')
   document.body.classList.remove('gated')
   sessionStorage.setItem('guavion_access', '1')
+  if (gateScene) { gateScene.destroy(); gateScene = null }
+  if (!heroScene) heroScene = initHeroScene(document.getElementById('hero-canvas'))
+  if (!ctaScene) ctaScene = initCtaScene(document.getElementById('cta-canvas'))
 }
 
 if (sessionStorage.getItem('guavion_access') === '1') {

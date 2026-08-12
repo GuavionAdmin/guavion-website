@@ -67,6 +67,17 @@ a:hover { color: #fbbf24; }
   padding: 0 32px;
 }
 
+/* ---- Three.js canvases ---- */
+.three-canvas {
+  position: absolute; inset: 0;
+  width: 100% !important; height: 100% !important;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero .three-canvas { pointer-events: auto; }
+.gate .three-canvas { z-index: 0; }
+.gate__inner { position: relative; z-index: 1; }
+
 /* ---- Scroll reveal ---- */
 .reveal {
   opacity: 0;
