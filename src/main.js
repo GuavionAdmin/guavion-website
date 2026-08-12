@@ -1,14 +1,10 @@
 import './style.css'
-import {
-  initHeroScene, initGateScene, initCtaScene,
-  initProblemScene, initPlatformScene, initHowScene, initUseCasesScene,
-} from './three-bg.js'
+import { initHeroScene, initGateScene, initCtaScene } from './three-bg.js'
 
 // Three.js scenes
 let gateScene = null
 let heroScene = null
 let ctaScene = null
-const sectionScenes = []
 
 gateScene = initGateScene(document.getElementById('gate-canvas'))
 
@@ -19,38 +15,6 @@ const gateInput = document.getElementById('gate-input')
 const gateBtn = document.getElementById('gate-btn')
 const gateError = document.getElementById('gate-error')
 
-function initSectionScenes() {
-  const configs = [
-    { id: 'problem-canvas', init: initProblemScene, section: '#problem' },
-    { id: 'platform-canvas', init: initPlatformScene, section: '#platform' },
-    { id: 'how-canvas', init: initHowScene, section: '#how' },
-    { id: 'usecases-canvas', init: initUseCasesScene, section: '#use-cases' },
-  ]
-
-  configs.forEach(({ id, init, section }) => {
-    const canvas = document.getElementById(id)
-    const sectionEl = document.querySelector(section)
-    if (!canvas || !sectionEl) return
-    const scene = init(canvas)
-    if (scene) {
-      scene.setVisible(false)
-      sectionScenes.push({ scene, el: sectionEl })
-    }
-  })
-
-  if (sectionScenes.length && 'IntersectionObserver' in window) {
-    const visObs = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const match = sectionScenes.find((s) => s.el === entry.target)
-        if (match) match.scene.setVisible(entry.isIntersecting)
-      })
-    }, { threshold: 0.05 })
-    sectionScenes.forEach(({ el }) => visObs.observe(el))
-  } else {
-    sectionScenes.forEach(({ scene }) => scene.setVisible(true))
-  }
-}
-
 function unlockSite() {
   gate?.classList.add('hidden')
   document.body.classList.remove('gated')
@@ -58,7 +22,6 @@ function unlockSite() {
   if (gateScene) { gateScene.destroy(); gateScene = null }
   if (!heroScene) heroScene = initHeroScene(document.getElementById('hero-canvas'))
   if (!ctaScene) ctaScene = initCtaScene(document.getElementById('cta-canvas'))
-  initSectionScenes()
 }
 
 if (sessionStorage.getItem('guavion_access') === '1') {
