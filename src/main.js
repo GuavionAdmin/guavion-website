@@ -78,20 +78,29 @@ if (reveals.length && 'IntersectionObserver' in window) {
   reveals.forEach(el => el.classList.add('visible'))
 }
 
-// Header shrink on scroll
+// Header state on scroll
 const header = document.querySelector('.header')
 if (header) {
   let ticking = false
+  const update = () => {
+    header.classList.toggle('scrolled', window.scrollY > 20)
+    ticking = false
+  }
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        header.style.borderBottomColor = window.scrollY > 20
-          ? 'rgba(255,255,255,.08)'
-          : 'rgba(255,255,255,.04)'
-        ticking = false
-      })
-      ticking = true
-    }
+    if (!ticking) { requestAnimationFrame(update); ticking = true }
+  }, { passive: true })
+  update()
+}
+
+// Card cursor spotlight (sets --mx/--my used by .card::after)
+const finePointer = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
+if (finePointer) {
+  document.querySelectorAll('.card').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect()
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`)
+      card.style.setProperty('--my', `${e.clientY - r.top}px`)
+    })
   })
 }
 
