@@ -1,0 +1,92 @@
+{
+  ".vite/deps/_metadata.json": {
+    "mtime": 1790260943.475154,
+    "ast_hash": "6ac04c0f68c56c5b6e0ef45467a85a3d",
+    "semantic_hash": ""
+  },
+  ".vite/deps/package.json": {
+    "mtime": 1790260943.475243,
+    "ast_hash": "d0707362e90f00edd12435e9d3b9d71c",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1790260943.479159,
+    "ast_hash": "6adfa30d76b177bd6420e470163eaa6d",
+    "semantic_hash": ""
+  },
+  "push.sh": {
+    "mtime": 1790260943.481321,
+    "ast_hash": "674c87c40c7afae47224ff38ea444ba7",
+    "semantic_hash": ""
+  },
+  "server/index.js": {
+    "mtime": 1790260943.4815316,
+    "ast_hash": "a7c82dd7cff037a2d525ebc0bc2b3621",
+    "semantic_hash": ""
+  },
+  "server/package.json": {
+    "mtime": 1790260943.4816034,
+    "ast_hash": "069c3f4a426f9302a402dd4286100ba5",
+    "semantic_hash": ""
+  },
+  "src/main.js": {
+    "mtime": 1790260943.4817832,
+    "ast_hash": "90ccc370f2af1268af879b17f019efdc",
+    "semantic_hash": ""
+  },
+  "src/three-bg.js": {
+    "mtime": 1790260943.4822254,
+    "ast_hash": "9470a99ec85231141286dca27083ef6b",
+    "semantic_hash": ""
+  },
+  "vite.config.js": {
+    "mtime": 1790260943.482307,
+    "ast_hash": "c45a4b5283887cc09625d5e75041a5cd",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1790260943.4786243,
+    "ast_hash": "f09fc148b205f9a618f31e4be240a588",
+    "semantic_hash": ""
+  },
+  "docs/WAITLIST-SETUP.md": {
+    "mtime": 1790260943.4788043,
+    "ast_hash": "ab11fb5ecc107feb3556a0749a6380aa",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1790261061.3174646,
+    "ast_hash": "0ee66486f018e64acb9cbf28b996dcc2",
+    "semantic_hash": ""
+  },
+  "server/README.md": {
+    "mtime": 1790260943.4814472,
+    "ast_hash": "b6e428e0857f8381558aa71fd0b554ac",
+    "semantic_hash": ""
+  },
+  "Executive_Summary_Guavion_EJO.docx.pdf": {
+    "mtime": 1790260943.4761724,
+    "ast_hash": "f67610255cffab3d748909413018de6d",
+    "semantic_hash": ""
+  },
+  "GuavionIcon.png": {
+    "mtime": 1790260943.4774919,
+    "ast_hash": "885e1d3298224764f53d61a041580a5f",
+    "semantic_hash": ""
+  },
+  "GuavionLogoNew.png": {
+    "mtime": 1790260943.4783378,
+    "ast_hash": "2d664e3811cd35892c49009977f3d5ff",
+    "semantic_hash": ""
+  },
+  "public/GuavionIcon.png": {
+    "mtime": 1790260943.4801283,
+    "ast_hash": "885e1d3298224764f53d61a041580a5f",
+    "semantic_hash": ""
+  },
+  "public/GuavionLogoNew.png": {
+    "mtime": 1790260943.4809475,
+    "ast_hash": "2d664e3811cd35892c49009977f3d5ff",
+    "semantic_hash": ""
+  }
+}

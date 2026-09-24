@@ -699,16 +699,6 @@ body.gated .footer { display: none; }
   transform: translateY(-1px);
 }
 
-/* Team: centered wrap so 5 cards sit 3 + 2 */
-.team {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
-  max-width: var(--max); margin: 0 auto; text-align: left;
-}
-.team__card { flex: 0 1 calc((100% - 32px) / 3); padding: 28px; }
-.team__card h3 { margin-bottom: 4px; }
-.team__card .card__who { font-size: .82rem; margin-bottom: 12px !important; }
-.team__card p:not(.card__who) { font-size: .9rem; }
-
 /* ======== MOTION PREFERENCE ======== */
 @media (prefers-reduced-motion: reduce) {
   .hero::before, .hero__accent { animation: none; }
@@ -739,7 +729,6 @@ body.gated .footer { display: none; }
   .compare__mid { padding: 8px 0; }
   .compare__arrow { width: 1px; height: 40px; margin: 0 0 14px; background: linear-gradient(180deg, transparent, var(--accent)); }
   .compare__arrow::after { right: -3.5px; top: auto; bottom: 4px; transform: rotate(135deg); }
-  .team__card { flex-basis: 100%; }
   .timeline::before { left: 17px; }
   .timeline__n { width: 36px; height: 36px; }
   .hero__cta { flex-direction: column; align-items: center; }
